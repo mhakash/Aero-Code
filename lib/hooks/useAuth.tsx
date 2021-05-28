@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import firebase from '../utils/firebase-client';
+import firebase from '../utils/firebaseClient';
 // import { User } from '../../types';
 // import { getUser } from '../api';
 

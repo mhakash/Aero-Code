@@ -16,6 +16,7 @@ const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfi
 export const authenticate = async (): Promise<{ success: boolean }> => {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebaseApp.auth().languageCode = 'en';
+
   try {
     await firebaseApp.auth().signInWithPopup(provider);
     return { success: true };
@@ -28,9 +29,11 @@ export const authenticate = async (): Promise<{ success: boolean }> => {
 export const signout = async (): Promise<{ success: boolean }> => {
   try {
     await firebaseApp.auth().signOut();
+
     return { success: true };
   } catch (err) {
     console.log(err.message);
+
     return { success: false };
   }
 };

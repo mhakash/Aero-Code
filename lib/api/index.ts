@@ -5,4 +5,4 @@
 
 // }
 
-export const get = () => true;
+export const get = (): boolean => true;
