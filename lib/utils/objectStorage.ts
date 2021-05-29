@@ -8,7 +8,10 @@ const s3 = new S3({
   signatureVersion: 'v4',
 });
 
-export const createPost = async (bucket: string, key: string): Promise<S3.PresignedPost> => {
+export const createPost = async (
+  bucket: string,
+  key: string,
+): Promise<S3.PresignedPost> => {
   const post = await s3.createPresignedPost({
     Bucket: bucket,
     Fields: {
@@ -20,4 +23,21 @@ export const createPost = async (bucket: string, key: string): Promise<S3.Presig
     ],
   });
   return post;
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const getObject = async (bucket: string, key: string) => {
+  const params = {
+    Bucket: bucket,
+    Key: key,
+  };
+  try {
+    const x = await s3
+      .getObject(params)
+      .promise()
+      .then((data) => data.Body);
+    return x;
+  } catch (err) {
+    throw new Error('cannot get object');
+  }
 };
