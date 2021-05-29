@@ -13,7 +13,6 @@ if (!admin.apps.length) {
 export const decodeToken = async (token: string): Promise<admin.auth.DecodedIdToken> => {
   try {
     const user = await admin.auth().verifyIdToken(token);
-
     return user;
   } catch (err) {
     throw new Error('Invalid Token');

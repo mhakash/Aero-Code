@@ -1,5 +1,6 @@
 export type User = {
-  userName: string;
+  _id: string;
   email: string;
-  uid: string;
+  avatar: string;
+  profileCompleted?: boolean;
 };

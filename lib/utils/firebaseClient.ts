@@ -11,17 +11,48 @@ const firebaseConfig = {
   measurementId: 'G-RNPCQS04MB',
 };
 
-const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
+const firebaseApp = !firebase.apps.length
+  ? firebase.initializeApp(firebaseConfig)
+  : firebase.app();
 
-export const authenticate = async (): Promise<{ success: boolean }> => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  firebaseApp.auth().languageCode = 'en';
+type Method = 'google' | 'google.com' | 'github' | 'github.com';
 
+const getProviderByMethod = (method: string) => {
+  switch (method) {
+    case 'google.com':
+    case 'google':
+      return new firebase.auth.GoogleAuthProvider();
+    case 'github.com':
+    case 'github':
+      return new firebase.auth.GithubAuthProvider();
+    default:
+      throw new Error('invalid method');
+  }
+};
+
+// const linkwithProvider= async (method: string): Promise<{ success: boolean }> => {
+//   const provider = getProviderByMethod(method)
+//   firebaseApp.auth().currentUser?.linkWithPopup(provider);
+// }
+
+export const authenticateWithProvider = async (
+  method: Method,
+): Promise<{ success: boolean }> => {
   try {
+    const provider = getProviderByMethod(method);
+    firebaseApp.auth().languageCode = 'en';
+
     await firebaseApp.auth().signInWithPopup(provider);
     return { success: true };
-  } catch (error) {
-    console.log('error occured cannot sign in');
+  } catch (err) {
+    console.log('error occured cannot sign in', err);
+
+    if (err.code === 'auth/account-exists-with-different-credential') {
+      // const pendingCred: firebase.auth.UserCredential = err.credential;
+      const email: string = err.email;
+      const methods = await firebaseApp.auth().fetchSignInMethodsForEmail(email);
+      console.log('already registered at', methods[0]);
+    }
     return { success: false };
   }
 };
@@ -29,11 +60,9 @@ export const authenticate = async (): Promise<{ success: boolean }> => {
 export const signout = async (): Promise<{ success: boolean }> => {
   try {
     await firebaseApp.auth().signOut();
-
     return { success: true };
   } catch (err) {
     console.log(err.message);
-
     return { success: false };
   }
 };

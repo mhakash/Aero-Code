@@ -10,15 +10,20 @@ if (!MONGODB_DB) {
   throw new Error('Please define the MONGODB_DB environment variable inside .env.local');
 }
 
+interface ExtendedGlobal extends NodeJS.Global {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mongo?: any;
+}
+
 /**
  * Global is used here to maintain a cached connection across hot reloads
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached = global.mongo;
+let cached = (global as ExtendedGlobal).mongo;
 
 if (!cached) {
-  cached = global.mongo = { conn: null, promise: null };
+  cached = (global as ExtendedGlobal).mongo = { conn: null, promise: null };
 }
 
 export const dbConnect = async (): Promise<{ client: MongoClient; db: Db }> => {

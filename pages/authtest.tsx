@@ -1,18 +1,9 @@
 import { useAuth } from 'lib/hooks/useAuth';
-import { authenticate, signout } from 'lib/utils/firebaseClient';
-import { FC, useEffect, useState } from 'react';
+import { authenticateWithProvider, signout } from 'lib/utils/firebaseClient';
+import { FC } from 'react';
 
 const TestPage: FC = () => {
-  const [token, setToken] = useState<string>();
-
   const auth = useAuth();
-  useEffect(() => {
-    const getToken = async () => {
-      const t = await auth.firebaseUser?.getIdToken();
-      setToken(t);
-    };
-    getToken().then();
-  }, [auth.firebaseUser]);
 
   return (
     <div className="p-4">
@@ -22,15 +13,23 @@ const TestPage: FC = () => {
             signout
           </button>{' '}
           <br />
-          <pre>{token}</pre>
-          <pre>{JSON.stringify(auth.firebaseUser, null, 2)}</pre>
+          <pre>{JSON.stringify(auth.user, null, 2)}</pre>
         </>
       ) : (
         <>
-          <button className="border-2" onClick={authenticate}>
-            signin
-          </button>{' '}
+          <button
+            className="border-2 m-4 p-2"
+            onClick={() => authenticateWithProvider('google')}
+          >
+            signin with google
+          </button>
           <br />
+          <button
+            className="border-2 m-4 p-2"
+            onClick={() => authenticateWithProvider('github')}
+          >
+            signin with github
+          </button>
         </>
       )}
     </div>

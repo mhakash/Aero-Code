@@ -1,26 +1,30 @@
+import { createUser, getUserById } from 'lib/models/User';
 import type { NextApiRequest, NextApiResponse } from 'next';
 // import { dbConnect } from '../../lib/utils/dbConnect';
 import { decodeToken } from '../../lib/utils/firebaseAdmin';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  // const { db } = await dbConnect();
-  // const movies = await db
-  //   .collection("movies")
-  //   .find({})
-  //   .sort({ metacritic: -1 })
-  //   .limit(20)
-  //   .toArray();
-  // res.json(movies);
   const token = req.headers['x-firebase-token'];
   if (token) {
     try {
       const t = await decodeToken(token as string);
-      console.log(t);
+
+      const _id = t.uid;
+      const email = t.email as string;
+      const avatar = t.picture as string;
+
+      const user = await getUserById(_id);
+
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        const newUser = await createUser({ email, avatar, _id });
+        return res.status(200).json(newUser);
+      }
+
+      // console.log(t);
     } catch (err) {
-      console.log(err);
+      res.status(403).json({ message: 'unauthorized' });
     }
   }
-  console.log('done');
-
-  res.status(200).json({ gg: 'gg' });
 };
