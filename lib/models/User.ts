@@ -21,10 +21,9 @@ export const createUser = async (user: User): Promise<User> => {
 
 export const getUserById = async (id: string): Promise<User | null> => {
   try {
-    const { db } = await dbConnect();
-    const userCollection = db.collection('users');
-
+    const userCollection = (await dbConnect()).db.collection('users');
     const result = await userCollection.findOne({ _id: id });
+    
     return result;
   } catch (err) {
     throw new Error('connection error');
