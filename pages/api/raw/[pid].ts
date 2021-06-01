@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     // TODO: check authorization
     try {
       await decodeToken(req.headers['x-firebase-token'] as string);
-      const data = await getObject('codes', key);
+      const data = await getObject('code', key);
       res.status(200).setHeader('Content-Type', 'image/jpeg').end(data, 'binary');
     } catch (err) {
       res.status(404).send('not found');
