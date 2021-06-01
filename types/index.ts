@@ -4,3 +4,10 @@ export type User = {
   avatar: string;
   profileCompleted?: boolean;
 };
+
+export type Code = {
+  _id: string;
+  name: string;
+  user_id: string;
+  reviewers?: string[];
+};
