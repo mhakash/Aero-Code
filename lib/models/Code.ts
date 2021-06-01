@@ -11,9 +11,18 @@ export const createCode = async (user_id: string, name: string, reviewers?: stri
   try {
     const codeCollection = (await dbConnect()).db.collection('codes');
     const res = await codeCollection.insertOne(temp);
+    
     const code:Code = {
         ... temp, _id: res.insertedId
     }
+
+    const userCollection = (await dbConnect()).db.collection('users');
+    const res2 = await userCollection.updateOne(
+      { _id: user_id},
+      { $push: { codes: res.insertedId } }
+    );
+
+    
     return code;
   } catch (err) {
     throw new Error('Could not create user\n' + err?.message);
