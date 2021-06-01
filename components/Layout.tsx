@@ -2,12 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from 'lib/hooks/useAuth';
+import HomeLayout from './HomeLayout';
 
 const Layout: React.FC = ({ children }) => {
   const auth = useAuth();
 
   return auth.user ? (
-    <>{children}</>
+    <HomeLayout>{children}</HomeLayout>
   ) : (
     <div>
       <div>
