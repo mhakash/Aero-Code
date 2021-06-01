@@ -2,7 +2,7 @@ import axios from 'axios';
 import { User } from 'types';
 import firebase from '../utils/firebaseClient';
 
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = '/api';
 
 export const get = async (url: string): Promise<unknown> => {
   try {
@@ -19,4 +19,10 @@ export const get = async (url: string): Promise<unknown> => {
 export const getUser = async (): Promise<User> => {
   const user = await get('/test');
   return user as User;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const uploadCode = async (filename: string): Promise<any> => {
+  const data = await get(`/testupload/?${filename}`);
+  return data;
 };
