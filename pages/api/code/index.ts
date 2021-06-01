@@ -1,9 +1,9 @@
 import { createCode } from 'lib/models/Code';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { decodeToken } from '../../lib/utils/firebaseAdmin';
-import { createPost } from '../../lib/utils/objectStorage';
+import { decodeToken } from '../../../lib/utils/firebaseAdmin';
+import { createPost } from '../../../lib/utils/objectStorage';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const token = req.headers['x-firebase-token'];
   if (token) {
     try {
@@ -22,6 +22,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } else {
     res.status(403).json({ message: 'unauthorized' });
   }
-  
-  
-}
+};

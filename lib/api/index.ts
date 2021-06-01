@@ -23,6 +23,6 @@ export const getUser = async (): Promise<User> => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const uploadCode = async (filename: string): Promise<any> => {
-  const data = await get(`/testupload?file=${filename}`);
+  const data = await get(`/code?file=${filename}`);
   return data;
 };
