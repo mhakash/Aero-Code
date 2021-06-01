@@ -1,5 +1,6 @@
 import { uploadCode } from 'lib/api';
 import { ChangeEvent } from 'react';
+import Layout from '../components/Layout';
 
 export default function Upload(): JSX.Element {
   const uploadPhoto = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,7 @@ export default function Upload(): JSX.Element {
   };
 
   return (
-    <>
+    <Layout>
       <p className="m-4">Upload a .png or .jpg image (max 10MB).</p>
       <input
         className="p-4 m-4 border-2"
@@ -38,6 +39,6 @@ export default function Upload(): JSX.Element {
         type="file"
         // accept="image/png, image/jpeg"
       />
-    </>
+    </Layout>
   );
 }

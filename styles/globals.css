@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Bogle';
+  src: url('/fonts/Bogle/BOGLEBLACK.OTF');
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bogle';
+  src: url('/fonts/Bogle/BOGLEBLACKITALIC.OTF');
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bogle';
+  src: url('/fonts/Bogle/BOGLEBOLD.OTF');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bogle';
+  src: url('/fonts/Bogle/BOGLEBOLDITALIC.OTF');
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bogle';
+  src: url('/fonts/Bogle/BOGLEITALIC.OTF');
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
