@@ -3,7 +3,7 @@ export type User = {
   email: string;
   avatar: string;
   profileCompleted?: boolean;
-  codes?: string[];
+  codes?: { _id: string; name: string }[];
 };
 
 export type Code = {

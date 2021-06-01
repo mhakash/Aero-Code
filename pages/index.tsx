@@ -1,26 +1,30 @@
 import Layout from 'components/Layout';
-import { signout } from 'lib/utils/firebaseClient';
+import { getCodes } from 'lib/api';
 import Link from 'next/link';
 import React, { FC } from 'react';
+import useSWR from 'swr';
 import { useAuth } from '../lib/hooks/useAuth';
 
 const Home: FC = () => {
   const auth = useAuth();
+  const { data } = useSWR(() => (auth.user ? '/codes' : null), getCodes);
 
   return (
     <Layout>
       <div className="m-4 ">
         <div className="text-2xl mb-4">Hello from Home</div>
-        <pre>{JSON.stringify(auth.user, null, 2)}</pre>
-        <div>
-          <Link href="/testupload">
-            <a>go to testupload</a>
-          </Link>
-        </div>
-        <button onClick={signout} className="p-2 m-2 border-gray-400 border-2">
-          Log out
-        </button>
       </div>
+      {(data ?? []).map((e) => {
+        return (
+          <Link href={`/code/${e._id}`} key={e._id}>
+            <a>
+              <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
+                {e.name}
+              </div>
+            </a>
+          </Link>
+        );
+      })}
     </Layout>
   );
 };
