@@ -1,3 +1,4 @@
+import { uploadCode } from 'lib/api';
 import { ChangeEvent } from 'react';
 
 export default function Upload(): JSX.Element {
@@ -6,9 +7,7 @@ export default function Upload(): JSX.Element {
       const file = e.target.files[0];
       const filename = encodeURIComponent(file.name);
 
-      const res = await fetch(`/api/testupload?file=${filename}`);
-      const data = await res.json();
-
+      const data = await uploadCode(filename);
       const { url, fields } = data;
 
       const formData = new FormData();
