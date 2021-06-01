@@ -7,7 +7,7 @@ export const createUser = async (user: User): Promise<User> => {
     email: user.email,
     avatar: user.avatar,
     profileCompleted: false,
-    codes:user.codes
+    codes: user.codes
   };
 
   try {
