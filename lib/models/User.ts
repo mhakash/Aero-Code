@@ -2,7 +2,6 @@ import { dbConnect } from '../utils/dbConnect';
 import { User } from 'types';
 
 export const createUser = async (user: User): Promise<User> => {
-
   const newUser = {
     _id: user._id,
     name: user.name,
@@ -10,7 +9,7 @@ export const createUser = async (user: User): Promise<User> => {
     avatar: user.avatar,
     profileCompleted: false,
     friends: [],
-    codes: []
+    codes: [],
   };
 
   try {
@@ -38,7 +37,7 @@ export const getUsersByName = async (name: string): Promise<User[]> => {
   try {
     const userCollection = (await dbConnect()).db.collection('users');
     const cursor = await userCollection.find({ $text: { $search: name } });
-    const result:User[] = []
+    const result: User[] = [];
     for await (const doc of cursor) {
       result.push(doc);
     }
@@ -48,3 +47,4 @@ export const getUsersByName = async (name: string): Promise<User[]> => {
     throw new Error('connection error');
   }
 };
+
