@@ -4,6 +4,7 @@ export type User = {
   email: string;
   avatar: string;
   profileCompleted?: boolean;
+  friends?: { _id: string; name: string }[];
   codes?: { _id: string; name: string }[];
 };
 
