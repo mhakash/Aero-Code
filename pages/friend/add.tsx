@@ -1,5 +1,5 @@
 import Layout from 'components/Layout';
-import { searchFriend } from 'lib/api';
+import { addFriend, searchFriend } from 'lib/api';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { FC, useState } from 'react';
@@ -23,7 +23,8 @@ const Home: FC = () => {
     setSearchResult(res ?? []);
   };
 
-  const handleAddFriend = () => {
+  const handleAddFriend = async (id: string, name: string) => {
+    await addFriend(id, name);
     return null;
   };
 
@@ -41,7 +42,7 @@ const Home: FC = () => {
             <img src={e.avatar} className="w-10 h-10 rounded-full m-2" />
             <div className=" p-2 flex-1">{e.name}</div>
             <button
-              onClick={handleAddFriend}
+              onClick={() => handleAddFriend(e._id, e.name)}
               className="p-2 mr-4 border-2 border-gray-500"
             >
               ADD FRIEND

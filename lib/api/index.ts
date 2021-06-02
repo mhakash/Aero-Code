@@ -61,3 +61,9 @@ export const searchFriend = async (name: string): Promise<User[]> => {
   console.log('data', data);
   return data as User[];
 };
+
+export const addFriend = async (id: string, name: string): Promise<void> => {
+  const data = await post('/friend/add', { id, name });
+  console.log('data', data);
+  // return data as User[];
+};

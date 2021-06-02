@@ -2,10 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import { signout } from 'lib/utils/firebaseClient';
 import Link from 'next/link';
+import { useAuth } from 'lib/hooks/useAuth';
 
 const HomeLayout: React.FC<{
   header?: JSX.Element;
 }> = ({ children, header }) => {
+  const auth = useAuth();
+
   return (
     <div className="flex min-h-screen">
       <div className="bg-gray-700 text-gray-200 w-96 flex flex-col items-center flex-shrink-0 max-h-screen">
@@ -25,12 +28,17 @@ const HomeLayout: React.FC<{
           </div>
         </div>
         <div className="">
-          <div>
-            <button onClick={signout} className="p-2 m-2 border-gray-400 border-2">
-              Log out
-            </button>
+          <div className="mb-12 flex items-center">
+            <div className="mr-8">
+              <img src={auth.user?.avatar} className="w-16 h-16 rounded-full" />
+            </div>
+            <div>
+              <div className=" m-2">profile</div>
+              <button onClick={signout} className="m-2 ">
+                Log out
+              </button>
+            </div>
           </div>
-          bottom
         </div>
       </div>
 
