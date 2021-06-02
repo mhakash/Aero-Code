@@ -8,8 +8,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   if (token) {
     try {
       const t = await decodeToken(token as string);
-
+      // console.log('token', t);
       const _id = t.uid;
+      const name = t.name ?? '';
       const email = t.email as string;
       const avatar = t.picture as string;
 
@@ -18,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       if (user) {
         return res.status(200).json(user);
       } else {
-        const newUser = await createUser({ email, avatar, _id });
+        const newUser = await createUser({ email, avatar, _id, name });
         return res.status(200).json(newUser);
       }
 

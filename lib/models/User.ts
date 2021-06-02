@@ -4,6 +4,7 @@ import { User } from 'types';
 export const createUser = async (user: User): Promise<User> => {
   const newUser = {
     _id: user._id,
+    name: user.name,
     email: user.email,
     avatar: user.avatar,
     profileCompleted: false,
