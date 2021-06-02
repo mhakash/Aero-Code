@@ -4,11 +4,13 @@ import Image from 'next/image';
 import { useAuth } from 'lib/hooks/useAuth';
 import HomeLayout from './HomeLayout';
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{
+  header?: JSX.Element;
+}> = ({ children, header }) => {
   const auth = useAuth();
 
   return auth.user ? (
-    <HomeLayout>{children}</HomeLayout>
+    <HomeLayout header={header}>{children}</HomeLayout>
   ) : (
     <div>
       <div>

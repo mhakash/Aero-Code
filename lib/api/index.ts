@@ -40,12 +40,13 @@ export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   return codes as { _id: string; name: string }[];
 };
 
-export const getCodeById = async (id: string): Promise<string> => {
+export const getCodeById = async (id: string): Promise<any> => {
   const code = await get(`/code/${id}`);
-  if (typeof code === 'object' && code !== null) {
-    return JSON.stringify(code, null, 2);
-  }
-  return code as string;
+  // if (typeof code === 'object' && code !== null) {
+  //   return JSON.stringify(code, null, 2);
+  // }
+  console.log(code);
+  return code;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

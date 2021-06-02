@@ -1,4 +1,5 @@
 import { dbConnect } from '../utils/dbConnect';
+import { ObjectId } from 'mongodb';
 import { Code, User } from 'types';
 
 export const createCode = async (
@@ -36,8 +37,9 @@ export const createCode = async (
 export const getCodeById = async (id: string): Promise<Code | null> => {
   try {
     const codeCollection = (await dbConnect()).db.collection('codes');
-    const result = await codeCollection.findOne({ _id: id });
-
+    console.log('id', id);
+    const result = await codeCollection.findOne({ _id: new ObjectId(id) });
+    console.log('result', result);
     return result;
   } catch (err) {
     throw new Error('connection error');

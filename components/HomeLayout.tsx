@@ -3,17 +3,24 @@ import Image from 'next/image';
 import { signout } from 'lib/utils/firebaseClient';
 import Link from 'next/link';
 
-const HomeLayout: React.FC = ({ children }) => {
+const HomeLayout: React.FC<{
+  header?: JSX.Element;
+}> = ({ children, header }) => {
   return (
     <div className="flex min-h-screen">
       <div className="bg-gray-700 text-gray-200 w-96 flex flex-col items-center flex-shrink-0 max-h-screen">
         <div className="mt-8">
           <Image src="/images/aero-code-full.svg" width={182} height={67} />
         </div>
-        <div className="flex-1 overflow-y-scroll no-scrollbar">
-          <div>
+        <div className="flex-1 overflow-y-scroll no-scrollbar flex flex-col">
+          <div className="mt-4 m-2">
             <Link href="/">
               <a>Reviews</a>
+            </Link>
+          </div>
+          <div className="m-2">
+            <Link href="/friend">
+              <a>Friends</a>
             </Link>
           </div>
         </div>
@@ -29,12 +36,7 @@ const HomeLayout: React.FC = ({ children }) => {
 
       <div className="flex flex-col flex-1 max-h-screen">
         <div className=" bg-gray-200 w-full p-4 flex justify-between">
-          <div>Reviews</div>
-          <div>
-            <Link href="/upload-review">
-              <a>Add review</a>
-            </Link>
-          </div>
+          {header && header}
         </div>
 
         <div className="px-4 flex-1 bg-gray-50 overflow-y-scroll flex flex-col">
