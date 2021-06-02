@@ -16,11 +16,11 @@ export const get = async (url: string): Promise<unknown> => {
   }
 };
 
-export const post = async (url: string): Promise<unknown> => {
+export const post = async (url: string, body?: any): Promise<unknown> => {
   try {
     const token = await firebase.auth().currentUser?.getIdToken();
     // console.log('token', token);
-    const res = await axios.post(BASE_URL + url, null, {
+    const res = await axios.post(BASE_URL + url, body ?? null, {
       headers: { 'x-firebase-token': token },
     });
     return res.data;
@@ -54,4 +54,10 @@ export const uploadCode = async (filename: string): Promise<any> => {
   const data = await post(`/code?file=${filename}`);
   // console.log('data', data);
   return data;
+};
+
+export const searchFriend = async (name: string): Promise<User[]> => {
+  const data = await post('/friend', { name });
+  console.log('data', data);
+  return data as User[];
 };

@@ -1,11 +1,12 @@
 import Layout from 'components/Layout';
-import { getCodeById } from 'lib/api';
+import { searchFriend } from 'lib/api';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
 import { useForm } from 'react-hook-form';
+import { User } from 'types';
 
 const Home: FC = () => {
   const auth = useAuth();
@@ -15,8 +16,15 @@ const Home: FC = () => {
   //   () => getCodeById(pid as string),
   // );
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [searchResult, setSearchResult] = useState<User[]>([]);
+
+  const onSubmit = async (data) => {
+    const res = await searchFriend(data.name);
+    setSearchResult(res ?? []);
+  };
+
+  const handleAddFriend = () => {
+    return null;
   };
 
   return (
@@ -27,6 +35,19 @@ const Home: FC = () => {
         </>
       }
     >
+      {searchResult &&
+        searchResult.map((e) => (
+          <div key={e._id} className="m-2 flex items-center border-gray-200 border-2">
+            <img src={e.avatar} className="w-10 h-10 rounded-full m-2" />
+            <div className=" p-2 flex-1">{e.name}</div>
+            <button
+              onClick={handleAddFriend}
+              className="p-2 mr-4 border-2 border-gray-500"
+            >
+              ADD FRIEND
+            </button>
+          </div>
+        ))}
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"

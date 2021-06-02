@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     if (req.method === 'POST') {
       try {
         const friend_name = req.body.name;
-        const friends = getUsersByName(friend_name);
+        const friends = await getUsersByName(friend_name);
         res.status(200).json(friends);
       } catch (err) {
         res.status(404).json({ message: 'unauthorized' }); // TODO:
