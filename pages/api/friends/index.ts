@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { decodeToken } from '../../lib/utils/firebaseAdmin';
+import { decodeToken } from '../../../lib/utils/firebaseAdmin';
 import { getUserById, getUsersByName } from 'lib/models/User';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
