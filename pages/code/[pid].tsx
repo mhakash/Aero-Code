@@ -16,8 +16,20 @@ const Home: FC = () => {
   );
 
   return (
-    <Layout>
-      <pre>{data}</pre>
+    <Layout
+      header={
+        <>
+          <div>{data?.name}</div>
+        </>
+      }
+    >
+      {data?.data && (
+        <pre>
+          {typeof data.data === 'object'
+            ? JSON.stringify(data.data, null, 2)
+            : data?.data}
+        </pre>
+      )}
     </Layout>
   );
 };

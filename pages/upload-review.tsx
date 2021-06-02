@@ -19,7 +19,6 @@ const UploadReviewPage: React.FC = () => {
 
       const data = await uploadCode(filename);
 
-      console.log('data', data);
       const { url, fields } = data;
 
       const formData = new FormData();
@@ -44,7 +43,7 @@ const UploadReviewPage: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout header={<>Upload Code</>}>
       <div>
         <input
           className="p-2 m-2 border-2"

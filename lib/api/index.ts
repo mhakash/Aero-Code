@@ -16,11 +16,11 @@ export const get = async (url: string): Promise<unknown> => {
   }
 };
 
-export const post = async (url: string): Promise<unknown> => {
+export const post = async (url: string, body?: any): Promise<unknown> => {
   try {
     const token = await firebase.auth().currentUser?.getIdToken();
     // console.log('token', token);
-    const res = await axios.post(BASE_URL + url, null, {
+    const res = await axios.post(BASE_URL + url, body ?? null, {
       headers: { 'x-firebase-token': token },
     });
     return res.data;
@@ -40,12 +40,13 @@ export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   return codes as { _id: string; name: string }[];
 };
 
-export const getCodeById = async (id: string): Promise<string> => {
+export const getCodeById = async (id: string): Promise<any> => {
   const code = await get(`/code/${id}`);
-  if (typeof code === 'object' && code !== null) {
-    return JSON.stringify(code, null, 2);
-  }
-  return code as string;
+  // if (typeof code === 'object' && code !== null) {
+  //   return JSON.stringify(code, null, 2);
+  // }
+  console.log(code);
+  return code;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,4 +54,16 @@ export const uploadCode = async (filename: string): Promise<any> => {
   const data = await post(`/code?file=${filename}`);
   // console.log('data', data);
   return data;
+};
+
+export const searchFriend = async (name: string): Promise<User[]> => {
+  const data = await post('/friend', { name });
+  console.log('data', data);
+  return data as User[];
+};
+
+export const addFriend = async (id: string, name: string): Promise<void> => {
+  const data = await post('/friend/add', { id, name });
+  console.log('data', data);
+  // return data as User[];
 };

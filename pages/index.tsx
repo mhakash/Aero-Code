@@ -10,7 +10,18 @@ const Home: FC = () => {
   const { data } = useSWR(() => (auth.user ? '/codes' : null), getCodes);
 
   return (
-    <Layout>
+    <Layout
+      header={
+        <>
+          <div>Reviews</div>
+          <div>
+            <Link href="/upload-review">
+              <a>Add review</a>
+            </Link>
+          </div>
+        </>
+      }
+    >
       <div className="m-4 ">
         <div className="text-2xl mb-4">Hello from Home</div>
       </div>
