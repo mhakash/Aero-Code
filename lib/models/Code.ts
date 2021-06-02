@@ -21,15 +21,10 @@ export const createCode = async (
       _id: res.insertedId,
     };
 
-    // console.log('code updated')
-
     const userCollection = (await dbConnect()).db.collection('users');
 
     const t = { _id: res.insertedId, name: name };
-    // console.log(user_id)
     await userCollection.updateOne({ _id: user_id }, { $push: { codes: t } });
-
-    console.log('user updated');
 
     return code;
   } catch (err) {

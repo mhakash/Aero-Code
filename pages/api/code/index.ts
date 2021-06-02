@@ -7,7 +7,6 @@ import { Code } from 'types';
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const token = req.headers['x-firebase-token'];
 
-  console.log('header', req.headers);
   if (token) {
     const t = await decodeToken(token as string);
     const user_id = t.uid;
@@ -19,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
           : req.query.file;
 
         // TODO: find out who are reviewers
-        const code: Code = await createCode(user_id, file_name);
+        const code: Code = await createCode(user_id, file_name, []);
         const post = await createPost('code', code._id);
         res.status(200).json(post);
       } catch (err) {

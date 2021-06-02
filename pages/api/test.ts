@@ -5,7 +5,6 @@ import { decodeToken } from '../../lib/utils/firebaseAdmin';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const token = req.headers['x-firebase-token'];
-  console.log('token', token);
   if (token) {
     try {
       const t = await decodeToken(token as string);

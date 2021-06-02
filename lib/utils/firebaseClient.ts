@@ -45,8 +45,6 @@ export const authenticateWithProvider = async (
     await firebaseApp.auth().signInWithPopup(provider);
     return { success: true };
   } catch (err) {
-    console.log('error occured cannot sign in', err);
-
     if (err.code === 'auth/account-exists-with-different-credential') {
       // const pendingCred: firebase.auth.UserCredential = err.credential;
       const email: string = err.email;
