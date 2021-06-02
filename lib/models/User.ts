@@ -1,5 +1,6 @@
 import { dbConnect } from '../utils/dbConnect';
 import { User } from 'types';
+import { UpdateWriteOpResult } from 'mongodb';
 
 export const createUser = async (user: User): Promise<User> => {
   const newUser = {
@@ -48,3 +49,14 @@ export const getUsersByName = async (name: string): Promise<User[]> => {
   }
 };
 
+export const addFriend = async (user_id: string, friend_id: string, friend_name: string): Promise<UpdateWriteOpResult> => {
+  try {
+    const userCollection = (await dbConnect()).db.collection('users');
+    const t = { _id: friend_id, name: friend_name };
+    const promise = await userCollection.updateOne({ _id: user_id }, { $push: { friends: t } });
+
+    return promise;
+  } catch (err) {
+    throw new Error('connection error');
+  }
+};
