@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - minio
+
+  mongo:
+    image: mongo
+    ports:
+      - '27017-27019:27017-27019'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-db:/data/db
+
+  minio:
+    image: minio/minio
+    hostname: minio
+    ports:
+      - '9000:9000'
+    volumes:
+      - datastore:/data
+    environment:
+      MINIO_ROOT_USER: minio123
+      MINIO_ROOT_PASSWORD: minio123
+    command: server /data
+    # networks:
+    #   mynet:
+    #     aliases:
+    #       - ${HOSTNAME}
+
+volumes:
+  mongo-db:
+  datastore:
+# networks:
+#   mynet:

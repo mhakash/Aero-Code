@@ -20,6 +20,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         // TODO: find out who are reviewers
         const code: Code = await createCode(user_id, file_name, []);
         const post = await createPost('code', code._id);
+
+        // TODO: change localhost to minio-url
+        post.url = post.url.replace('minio', 'localhost');
+
+        console.log(post);
         res.status(200).json(post);
       } catch (err) {
         res.status(404).json({ message: 'unauthorized' }); // TODO:
