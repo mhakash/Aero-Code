@@ -18,7 +18,7 @@ const Home: FC = () => {
 
   const [searchResult, setSearchResult] = useState<User[]>([]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { name: string }) => {
     const res = await searchFriend(data.name);
     setSearchResult(res ?? []);
   };
