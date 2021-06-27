@@ -29,7 +29,6 @@ export const createCode = async (
 
     return code;
   } catch (err) {
-    console.log('error here');
     throw new Error('Could not create user\n' + err?.message);
   }
 };
@@ -37,9 +36,7 @@ export const createCode = async (
 export const getCodeById = async (id: string): Promise<Code | null> => {
   try {
     const codeCollection = (await dbConnect()).db.collection('codes');
-    console.log('id', id);
     const result = await codeCollection.findOne({ _id: new ObjectId(id) });
-    console.log('result', result);
     return result;
   } catch (err) {
     throw new Error('connection error');
