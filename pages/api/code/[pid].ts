@@ -11,9 +11,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     await decodeToken(req.headers['x-firebase-token'] as string);
     const data = await getObject('code', key);
     const code = await getCodeById(key);
-    console.log(code);
+    const ext = code?.name.split('.').pop();
     // res.status(200).setHeader('Content-Type', 'image/jpeg').end(data, 'binary');
-    res.status(200).json({ name: code?.name, data: data?.toString() });
+    res.status(200).json({ name: code?.name, ext: ext, data: data?.toString() });
   } catch (err) {
     res.status(404).send('not found');
   }

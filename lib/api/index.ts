@@ -40,11 +40,10 @@ export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   return codes as { _id: string; name: string }[];
 };
 
-export const getCodeById = async (id: string): Promise<any> => {
-  const code = await get(`/code/${id}`);
-  // if (typeof code === 'object' && code !== null) {
-  //   return JSON.stringify(code, null, 2);
-  // }
+type CodeData = { data: string | Object; ext?: string; name: string };
+
+export const getCodeById = async (id: string): Promise<CodeData> => {
+  const code = (await get(`/code/${id}`)) as CodeData;
   console.log(code);
   return code;
 };
