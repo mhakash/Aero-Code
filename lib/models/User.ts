@@ -11,6 +11,7 @@ export const createUser = async (user: User): Promise<User> => {
     profileCompleted: false,
     friends: [],
     codes: [],
+    posts: [],
   };
 
   try {
