@@ -13,7 +13,12 @@ const HomeLayout: React.FC<{
     <div className="flex min-h-screen">
       <div className="bg-gray-700 text-gray-200 w-96 flex flex-col items-center flex-shrink-0 max-h-screen">
         <div className="mt-8">
-          <Image src="/images/aero-code-full.svg" width={182} height={67} />
+          <Image
+            src="/images/aero-code-full.svg"
+            width={182}
+            height={67}
+            alt="aero-code-full"
+          />
         </div>
         <div className="flex-1 overflow-y-scroll no-scrollbar flex flex-col">
           <div className="mt-4 m-2">
@@ -30,7 +35,11 @@ const HomeLayout: React.FC<{
         <div className="">
           <div className="mb-12 flex items-center">
             <div className="mr-8">
-              <img src={auth.user?.avatar} className="w-16 h-16 rounded-full" />
+              <div className="rounded-full">
+                {auth.user?.avatar && (
+                  <Image src={auth.user.avatar} alt="avatar" width={16} height={16} />
+                )}
+              </div>
             </div>
             <div>
               <div className=" m-2">profile</div>

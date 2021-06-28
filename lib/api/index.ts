@@ -48,7 +48,6 @@ export const getCodeById = async (id: string): Promise<CodeData> => {
   return code;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const uploadCode = async (filename: string): Promise<any> => {
   const data = await post(`/code?file=${filename}`);
   // console.log('data', data);
