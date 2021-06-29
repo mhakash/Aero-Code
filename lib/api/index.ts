@@ -34,6 +34,11 @@ export const getUser = async (): Promise<User> => {
   return user as User;
 };
 
+export const getMessageFriends = async (): Promise<{ _id: string; friend_name: string ; recentmsg: Message }[]> => {
+  const data = await get('/message');
+  return data as { _id: string; friend_name: string ; recentmsg: Message }[];
+};
+
 export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   const codes = await get('/code');
   // console.log('data', codes);
@@ -66,15 +71,12 @@ export const addFriend = async (id: string, name: string): Promise<void> => {
   // return data as User[];
 };
 
-export const addMessage = async (chat_room_id: string, msg: string):Promise<void> => {
-  const data = await post ('/message', { chat_room_id , msg });
+export const addMessage = async ( chid: string ,msg: string):Promise<void> => {
+  const data = await post (`/message/${chid}`, { msg });
 };
 
 export const getMessages = async (chid: string): Promise<Message[]> => {
   const data = await get(`/message/${chid}`);
-  // if (typeof code === 'object' && code !== null) {
-  //   return JSON.stringify(code, null, 2);
-  // }
-  //console.log(code);
+
   return data as Message[];
 };

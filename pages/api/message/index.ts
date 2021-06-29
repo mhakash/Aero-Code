@@ -1,4 +1,4 @@
-import { addMessage,getMessageByChatRoomId } from 'lib/models/Message';
+import { addMessage,getMessageByChatRoomId, getMessageFriends } from 'lib/models/Message';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { decodeToken } from '../../../lib/utils/firebaseAdmin';
 
@@ -21,14 +21,12 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       } else if (req.method === 'GET') {
         // TODO
         try {
-
-            ///EKHANE ENSURE KORA LAGBE J MESSAGE E DHUKLE JATE SENT SOB MESSAGE DEKHA JAY
-            const messages = getMessageByChatRoomId(req.body.chid);
-            res.status(200).json(messages);
-            /*const user = await getUserById(user_id);
-          res.status(200).json(user?.friends);
-        */
+        const user_id = t.uid;    
+        const result = await getMessageFriends(user_id);
+        console.log(result);
+        res.status(200).json(result);
         } catch (err) {
+          
           res.status(404).json('not found');
         }
       }

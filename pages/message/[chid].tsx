@@ -68,9 +68,9 @@ const Message: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const chat_room = '60db0e2ae4a137001dd52414';
+    const chat_room = chid as string;
     const msg = message;
-    await addMessage(chat_room, msg);
+    await addMessage(chat_room as string,msg);
     console.log(msg);
     setMessage('');
 
