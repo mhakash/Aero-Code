@@ -1,10 +1,9 @@
 import Layout from 'components/Layout';
 import { addMessage, getMessages } from 'lib/api';
-import React, { FC, useReducer, useState } from 'react';
+import React, { FC, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
-
 
 type MessageType = {
   user: 'me' | 'other';
@@ -12,10 +11,12 @@ type MessageType = {
   key: string | number;
 };
 
-type Action = {
-  type: 'add';
-  payload: MessageType;
-};
+type Action =
+  | {
+      type: 'add';
+      payload: MessageType;
+    }
+  | { type: 'clear' };
 
 const initialMessage: MessageType[] = [
   {
@@ -29,28 +30,46 @@ const initialMessage: MessageType[] = [
 
 const reducer = (state: MessageType[], action: Action): MessageType[] => {
   if (action.type === 'add') return [...state, action.payload];
+  if (action.type === 'clear') return [];
   else return state;
 };
 
 const Message: FC = () => {
-    //console.log("called to hoise");
-    const auth = useAuth();
-    const router = useRouter();
-    const { chid } = router.query;
-    
-    const { data } = useSWR(
-      () => (chid && auth.user ? `/message/${chid}` : null),
-      () => getMessages(chid as string),
-    );
-  
+  //console.log("called to hoise");
+  const auth = useAuth();
+  const router = useRouter();
+  const { chid } = router.query;
+
+  const { data } = useSWR(
+    () => (chid && auth.user ? `/message/${chid}` : null),
+    () => getMessages(chid as string),
+  );
+
+  useEffect(() => {
+    if (data) {
+      dispatchMessage({ type: 'clear' });
+      console.log(data);
+      // data.forEach((e) => {
+      //   dispatchMessage({
+      //     type: 'add',
+      //     payload: {
+      //       user: e._id === auth.user?._id ? 'me' : 'other',
+      //       message: e.text,
+      //       key: e._id,
+      //     },
+      //   });
+      // });
+    }
+  }, [data]);
+
   const [message, setMessage] = useState('');
   const [messages, dispatchMessage] = useReducer(reducer, initialMessage);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const chat_room = "60d8d790983c82001d51fda0";
+    const chat_room = '60db06a1115622001d510506';
     const msg = message;
-    await addMessage(chat_room,msg);
+    await addMessage(chat_room, msg);
     console.log(msg);
     setMessage('');
 

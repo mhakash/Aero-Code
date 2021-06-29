@@ -10,11 +10,10 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   // TODO: check authorization
   try {
     await decodeToken(req.headers['x-firebase-token'] as string);
-    const data = await getObject('code', key);
     const msgs = await getMessageByChatRoomId(key);
     console.log(msgs);
     // res.status(200).setHeader('Content-Type', 'image/jpeg').end(data, 'binary');
-    res.status(200).json({ txt: "hello" });
+    res.status(200).json(msgs);
   } catch (err) {
     res.status(404).send('not found');
   }

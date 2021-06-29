@@ -2,7 +2,6 @@ import Layout from 'components/Layout';
 import { addMessage } from 'lib/api';
 import React, { FC, useReducer, useState } from 'react';
 
-
 type MessageType = {
   user: 'me' | 'other';
   message: string;
@@ -35,9 +34,9 @@ const Message: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const chat_room = "60d8d790983c82001d51fda0";
+    const chat_room = '60d8d790983c82001d51fda0';
     const msg = message;
-    await addMessage(chat_room,msg);
+    await addMessage(chat_room, msg);
     console.log(msg);
     setMessage('');
 

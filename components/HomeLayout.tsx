@@ -32,7 +32,7 @@ const HomeLayout: React.FC<{
             </Link>
           </div>
           <div className="m-2">
-            <Link href="/message/60d8d790983c82001d51fda0">
+            <Link href="/message/60db06a1115622001d510506">
               <a>Messages</a>
             </Link>
           </div>
@@ -54,9 +54,8 @@ const HomeLayout: React.FC<{
             </div>
           </div>
           <div className="mr-8">
-          <h3 >{auth.user?.name}  </h3>
+            <h3>{auth.user?.name} </h3>
           </div>
-            
         </div>
       </div>
 
