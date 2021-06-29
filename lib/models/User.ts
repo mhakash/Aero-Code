@@ -11,12 +11,12 @@ export const createUser = async (user: User): Promise<User> => {
     profileCompleted: false,
     friends: [],
     codes: [],
+    chatRooms: [],
   };
 
   try {
     const userCollection = (await dbConnect()).db.collection('users');
     await userCollection.insertOne(newUser);
-
     return newUser;
   } catch (err) {
     throw new Error('Could not create user\n' + err?.message);
@@ -52,9 +52,20 @@ export const getUsersByName = async (name: string): Promise<User[]> => {
 export const addFriend = async (user_id: string, friend_id: string, friend_name: string): Promise<UpdateWriteOpResult> => {
   try {
     const userCollection = (await dbConnect()).db.collection('users');
+    const user = await userCollection.findOne({ _id: user_id });
     const t = { _id: friend_id, name: friend_name };
-    const promise = await userCollection.updateOne({ _id: user_id }, { $push: { friends: t } });
-
+    const t2 = { _id: user_id, name: user.name };
+    
+    const chatRoomCollection = (await dbConnect()).db.collection('ChatRoom');
+    const chatRoom ={ 
+      messages:[],
+    };
+    const result = await chatRoomCollection.insertOne(chatRoom);
+    console.log(result.insertedId);
+    
+    const promise2 = await userCollection.updateOne({ _id: friend_id }, { $push: { friends: t2 ,chatRooms: result.insertedId} });
+    const promise = await userCollection.updateOne({ _id: user_id }, { $push: { friends: t ,chatRooms: result.insertedId} });
+    
     return promise;
   } catch (err) {
     throw new Error('connection error');

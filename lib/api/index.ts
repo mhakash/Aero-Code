@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Code, User } from 'types';
+import { Code, User, Message } from 'types';
 import firebase from '../utils/firebaseClient';
 
 const BASE_URL = '/api';
@@ -66,4 +66,17 @@ export const addFriend = async (id: string, name: string): Promise<void> => {
   const data = await post('/friend/add', { id, name });
   console.log('data', data);
   // return data as User[];
+};
+
+export const addMessage = async (chat_room_id: string, msg: string):Promise<void> => {
+  const data = await post ('/message', { chat_room_id , msg });
+};
+
+export const getMessages = async (chid: string): Promise<Message[]> => {
+  const data = await get(`/message/${chid}`);
+  // if (typeof code === 'object' && code !== null) {
+  //   return JSON.stringify(code, null, 2);
+  // }
+  //console.log(code);
+  return data as Message[];
 };
