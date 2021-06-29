@@ -7,7 +7,7 @@ export type User = {
   profileCompleted?: boolean;
   friends?: { _id: string; name: string }[];
   codes?: { _id: string; name: string }[];
-  chatRooms?: string[];
+  chatRooms?: { _id: string; friend_id: string ; friend_name: string }[];
   posts?: string[];
 };
 
