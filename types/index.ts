@@ -1,3 +1,4 @@
+
 export type User = {
   _id: string;
   name: string;
@@ -7,6 +8,7 @@ export type User = {
   friends?: { _id: string; name: string }[];
   codes?: { _id: string; name: string }[];
   chatRooms?: string[];
+  posts?: string[];
 };
 
 export type Code = {
@@ -25,4 +27,12 @@ export type Message={
 export type ChatRoom = {
   _id: string;
   messages?: string[];
+};
+export type Post = {
+  _id: string;
+  user_id: string;
+  body: string;
+  upvotes: number;
+  downvotes: number;
+  replies?: string[];
 };

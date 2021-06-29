@@ -1,9 +1,13 @@
 import Layout from '../components/Layout';
 import React, { ChangeEvent, useState } from 'react';
 import { uploadCode } from 'lib/api';
+import { useAlert } from 'react-alert';
+import { useRouter } from 'next/router';
 
 const UploadReviewPage: React.FC = () => {
   const [file, setFile] = useState<File>();
+  const alert = useAlert();
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -34,10 +38,14 @@ const UploadReviewPage: React.FC = () => {
 
       if (upload.ok) {
         console.log('Uploaded successfully!');
+        alert.show('upload successful', { type: 'success' });
+        router.push('/', '/');
       } else {
         console.error('Upload failed.');
+        alert.show('upload failed', { type: 'error' });
       }
     } else {
+      alert.show('no file selected', { type: 'error' });
       console.log('no file selected');
     }
   };

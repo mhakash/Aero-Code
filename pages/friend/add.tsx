@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { User } from 'types';
+import Image from 'next/image';
 
 const Home: FC = () => {
   const auth = useAuth();
@@ -39,7 +40,9 @@ const Home: FC = () => {
       {searchResult &&
         searchResult.map((e) => (
           <div key={e._id} className="m-2 flex items-center border-gray-200 border-2">
-            <img src={e.avatar} className="w-10 h-10 rounded-full m-2" />
+            <div className='className="w-10 h-10 rounded-full m-2"'>
+              <Image src={e.avatar} width={10} height={10} alt={`${e.name}_avatar`} />
+            </div>
             <div className=" p-2 flex-1">{e.name}</div>
             <button
               onClick={() => handleAddFriend(e._id, e.name)}

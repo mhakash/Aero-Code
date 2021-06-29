@@ -25,7 +25,6 @@ export const createPost = async (
   return post;
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getObject = async (bucket: string, key: string) => {
   const params = {
     Bucket: bucket,

@@ -11,7 +11,6 @@ if (!MONGODB_DB) {
 }
 
 interface ExtendedGlobal extends NodeJS.Global {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mongo?: any;
 }
 

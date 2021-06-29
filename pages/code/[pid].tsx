@@ -1,5 +1,6 @@
 import Layout from 'components/Layout';
 import { getCodeById } from 'lib/api';
+import Code from '../../components/Code';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import useSWR from 'swr';
@@ -24,11 +25,14 @@ const Home: FC = () => {
       }
     >
       {data?.data && (
-        <pre>
-          {typeof data.data === 'object'
-            ? JSON.stringify(data.data, null, 2)
-            : data?.data}
-        </pre>
+        <Code
+          code={
+            typeof data.data === 'object'
+              ? JSON.stringify(data.data, null, 2)
+              : data?.data
+          }
+          ext={data.ext}
+        />
       )}
     </Layout>
   );

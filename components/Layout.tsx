@@ -17,7 +17,12 @@ const Layout: React.FC<{
         <div className="min-h-screen flex">
           <div className="bg-gray-200 w-1/3 flex flex-col items-center">
             <div className="mt-20">
-              <Image src="/images/aero-code.svg" width={135} height={118} />
+              <Image
+                src="/images/aero-code.svg"
+                width={135}
+                height={118}
+                alt="aero-code-logo"
+              />
             </div>
 
             <div className="flex-1 flex justify-center flex-col">
@@ -32,7 +37,12 @@ const Layout: React.FC<{
 
           <div className="bg-gray-800 flex-1">
             <div className="p-4 text-center flex flex-col justify-center min-h-full">
-              <Image src="/images/aero-code-text.svg" width={472} height={405} />
+              <Image
+                src="/images/aero-code-text.svg"
+                width={472}
+                height={405}
+                alt="aero-code-text"
+              />
             </div>
           </div>
         </div>

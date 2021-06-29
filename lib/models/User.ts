@@ -12,6 +12,7 @@ export const createUser = async (user: User): Promise<User> => {
     friends: [],
     codes: [],
     chatRooms: [],
+    posts: [],
   };
 
   try {
