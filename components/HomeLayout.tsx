@@ -32,7 +32,7 @@ const HomeLayout: React.FC<{
             </Link>
           </div>
           <div className="m-2">
-            <Link href="/message/60db06a1115622001d510506">
+            <Link href="/message/60db0e2ae4a137001dd52414">
               <a>Messages</a>
             </Link>
           </div>
