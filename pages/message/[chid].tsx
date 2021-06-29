@@ -1,6 +1,9 @@
 import Layout from 'components/Layout';
-import { addMessage } from 'lib/api';
+import { addMessage, getMessages } from 'lib/api';
 import React, { FC, useReducer, useState } from 'react';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
+import { useAuth } from '../../lib/hooks/useAuth';
 
 
 type MessageType = {
@@ -30,6 +33,16 @@ const reducer = (state: MessageType[], action: Action): MessageType[] => {
 };
 
 const Message: FC = () => {
+    //console.log("called to hoise");
+    const auth = useAuth();
+    const router = useRouter();
+    const { chid } = router.query;
+    
+    const { data } = useSWR(
+      () => (chid && auth.user ? `/message/${chid}` : null),
+      () => getMessages(chid as string),
+    );
+  
   const [message, setMessage] = useState('');
   const [messages, dispatchMessage] = useReducer(reducer, initialMessage);
 

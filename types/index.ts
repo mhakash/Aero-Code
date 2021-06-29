@@ -7,6 +7,7 @@ export type User = {
   profileCompleted?: boolean;
   friends?: { _id: string; name: string }[];
   codes?: { _id: string; name: string }[];
+  chatRooms?: string[];
   posts?: string[];
 };
 
@@ -17,6 +18,16 @@ export type Code = {
   reviewers?: string[];
 };
 
+export type Message={
+  _id:string;
+  sender_id:string;
+  text:string; 
+};
+
+export type ChatRoom = {
+  _id: string;
+  messages?: string[];
+};
 export type Post = {
   _id: string;
   user_id: string;

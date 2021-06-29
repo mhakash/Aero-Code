@@ -31,6 +31,11 @@ const HomeLayout: React.FC<{
               <a>Friends</a>
             </Link>
           </div>
+          <div className="m-2">
+            <Link href="/message/60d8d790983c82001d51fda0">
+              <a>Messages</a>
+            </Link>
+          </div>
         </div>
         <div className="">
           <div className="mb-12 flex items-center">
@@ -48,6 +53,10 @@ const HomeLayout: React.FC<{
               </button>
             </div>
           </div>
+          <div className="mr-8">
+          <h3 >{auth.user?.name}  </h3>
+          </div>
+            
         </div>
       </div>
 
