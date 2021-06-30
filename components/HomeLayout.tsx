@@ -36,6 +36,11 @@ const HomeLayout: React.FC<{
               <a>Messages</a>
             </Link>
           </div>
+          <div className="m-2">
+            <Link href="/discussion">
+              <a>Discussion</a>
+            </Link>
+          </div>
         </div>
         <div className="">
           <div className="mb-12 flex items-center">

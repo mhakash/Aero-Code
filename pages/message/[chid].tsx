@@ -42,7 +42,7 @@ const Message: FC = () => {
   useEffect(() => {
     if (data) {
       dispatchMessage({ type: 'clear' });
-      console.log(data);
+      // console.log(data);
       data.forEach((e) => {
         dispatchMessage({
           type: 'add',
@@ -63,8 +63,8 @@ const Message: FC = () => {
     e.preventDefault();
     const chat_room = chid as string;
     const msg = message;
-    await addMessage(chat_room as string,msg);
-    console.log(msg);
+    await addMessage(chat_room, msg);
+    // console.log(msg);
     setMessage('');
 
     // Do someting;
