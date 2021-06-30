@@ -20,6 +20,7 @@ const Home: FC = () => {
   const [searchResult, setSearchResult] = useState<User[]>([]);
 
   const onSubmit = async (data: { name: string }) => {
+    console.log(auth.user?.friends);
     const res = await searchFriend(data.name);
     setSearchResult(res ?? []);
   };
@@ -39,26 +40,36 @@ const Home: FC = () => {
     >
       {searchResult &&
         searchResult.map((e) => (
-          <div key={e._id} className="m-2 flex items-center border-gray-200 border-2">
-            <div className='className="w-10 h-10 rounded-full m-2"'>
-              <Image src={e.avatar} width={10} height={10} alt={`${e.name}_avatar`} />
-            </div>
+          <div key={e._id} className="m-2 flex items-center ">
+            <Image
+              src={e.avatar}
+              width={24}
+              height={24}
+              alt={`${e.name}_avatar`}
+              className="rounded-full"
+            />
             <div className=" p-2 flex-1">{e.name}</div>
-            <button
-              onClick={() => handleAddFriend(e._id, e.name)}
-              className="p-2 mr-4 border-2 border-gray-500"
-            >
-              ADD FRIEND
-            </button>
+            {auth.user?.friends?.find((x) => x._id === e._id) ? null : (
+              <button
+                onClick={() => handleAddFriend(e._id, e.name)}
+                className="p-2 mr-4 border-2 border-gray-500 text-sm rounded-md"
+              >
+                ADD FRIEND
+              </button>
+            )}
           </div>
         ))}
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
+          autoComplete="off"
           {...register('name')}
-          className="m-2 p-2 border-2 border-gray-400"
+          className="m-2 p-2 border-2 rounded-md border-gray-400"
         />
-        <button type="submit" className="m-2 p-2 border-2 border-gray-400">
+        <button
+          type="submit"
+          className="m-2 p-2 border-2 rounded-md border-gray-400 hover:border-gray-700 text-sm"
+        >
           Search friend
         </button>
       </form>
