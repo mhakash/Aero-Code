@@ -35,7 +35,6 @@ const Home: FC = () => {
           ext={data.ext}
         />
       )}
-      <InputBox />
     </Layout>
   );
 };

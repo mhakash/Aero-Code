@@ -1,7 +1,7 @@
-import { NumberAttributeValue } from 'aws-sdk/clients/dynamodbstreams';
 import { useEffect, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import theme from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
+import InputBox from '../components/InputBox';
 
 const Code: React.FC<{ code: string; ext?: string }> = ({ ext, code = 'txt' }) => {
   const [lineToHighLight, setLineToHighLight] = useState<number[]>([]);
@@ -28,29 +28,37 @@ const Code: React.FC<{ code: string; ext?: string }> = ({ ext, code = 'txt' }) =
   }, []);
 
   return (
-    <div>
-      <SyntaxHighlighter
-        style={theme}
-        language={ext}
-        showLineNumbers={true}
-        useInlineStyles={true}
-        lineNumberStyle={(line: number) => {
-          let style = { cursor: 'pointer' };
-          if (lineToHighLight.indexOf(line) !== -1)
-            style.backgroundColor = 'rgb(165, 17, 66)';
+    <div className="flex">
+      <div className="flex-1 mr-2">
+        <SyntaxHighlighter
+          style={theme}
+          language={ext}
+          showLineNumbers={true}
+          useInlineStyles={true}
+          lineNumberStyle={(line: number) => {
+            let style = { cursor: 'pointer' };
+            if (lineToHighLight.indexOf(line) !== -1)
+              style.backgroundColor = 'rgb(165, 17, 66)';
 
-          return style;
-        }}
-        // lineProps={(lineNumber: NumberAttributeValue) => ({
-        //   style: { display: 'block', cursor: 'pointer' },
-        //   onClick() {
-        //     // alert(`Line Number Clicked: ${lineNumber}`)
-        //     console.log('hello');
-        //   },
-        // })}
-      >
-        {code}
-      </SyntaxHighlighter>
+            return style;
+          }}
+
+          // lineProps={(lineNumber: NumberAttributeValue) => ({
+          //   style: { display: 'block', cursor: 'pointer' },
+          //   onClick() {
+          //     // alert(`Line Number Clicked: ${lineNumber}`)
+          //     console.log('hello');
+          //   },
+          // })}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
+      {lineToHighLight.length > 0 && (
+        <div className="w-full max-w-xl">
+          <InputBox />
+        </div>
+      )}
     </div>
   );
 };

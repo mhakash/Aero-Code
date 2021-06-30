@@ -48,7 +48,7 @@ const InputBox = () => {
             </select>
           </div>
 
-          <div className="flex-1  flex justify-center">
+          {/* <div className="flex-1  flex justify-center">
             <label htmlFor="type">Color: </label>
             <select
               {...register('color')}
@@ -61,7 +61,7 @@ const InputBox = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
 
         <textarea

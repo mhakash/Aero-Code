@@ -57,8 +57,8 @@ export const getCodeById = async (id: string): Promise<CodeData> => {
   return code;
 };
 
-export const uploadCode = async (filename: string): Promise<any> => {
-  const data = await post(`/code?file=${filename}`);
+export const uploadCode = async (filename: string, reviewers: string[]): Promise<any> => {
+  const data = await post(`/code`, { file: filename, reviewers });
   // console.log('data', data);
   return data;
 };

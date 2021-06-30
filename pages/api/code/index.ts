@@ -13,12 +13,12 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     if (req.method === 'POST') {
       try {
-        const file_name = Array.isArray(req.query.file)
-          ? req.query.file[0]
-          : req.query.file;
+        const file_name = req.body.file;
+        const reviewers: string[] = req.body.reviewers ?? [];
 
-        // TODO: find out who are reviewers
-        const code: Code = await createCode(user_id, file_name, []);
+        console.log(file_name, reviewers);
+
+        const code: Code = await createCode(user_id, file_name, reviewers);
         const post = await createPost('code', code._id);
 
         // TODO: change localhost to minio-url

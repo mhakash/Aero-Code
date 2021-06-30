@@ -18,15 +18,7 @@ type Action =
     }
   | { type: 'clear' };
 
-const initialMessage: MessageType[] = [
-  {
-    key: 1,
-    user: 'me',
-    message: 'hello how are you',
-  },
-  { key: 2, user: 'other', message: 'I am fine, you?' },
-  { key: 3, user: 'me', message: 'I am fine too' },
-];
+const initialMessage: MessageType[] = [];
 
 const reducer = (state: MessageType[], action: Action): MessageType[] => {
   if (action.type === 'add') return [...state, action.payload];
@@ -43,7 +35,7 @@ const Message: FC = () => {
   const { data } = useSWR(
     () => (chid && auth.user ? `/message/${chid}` : null),
     () => getMessages(chid as string),
-    { refreshInterval: 1000 }
+    { refreshInterval: 1000 },
   );
 
   useEffect(() => {
