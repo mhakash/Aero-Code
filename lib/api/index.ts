@@ -81,6 +81,8 @@ export const getMessages = async (chid: string): Promise<Message[]> => {
   const data = await get(`/message/${chid}`);
 
   return data as Message[];
+<<<<<<< HEAD
+=======
 };
 
 export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
@@ -102,6 +104,7 @@ export const getDiscussionByID = async (pid: string): Promise<Post> => {
   // }
   //console.log(code);
   return data as Post;
+>>>>>>> main
 };
 
 export const addDiscussion = async (body: string): Promise<void> => {

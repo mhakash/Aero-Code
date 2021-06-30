@@ -19,13 +19,6 @@ type Action =
   | { type: 'clear' };
 
 const initialMessage: MessageType[] = [
-  {
-    key: 1,
-    user: 'me',
-    message: 'hello how are you',
-  },
-  { key: 2, user: 'other', message: 'I am fine, you?' },
-  { key: 3, user: 'me', message: 'I am fine too' },
 ];
 
 const reducer = (state: MessageType[], action: Action): MessageType[] => {
