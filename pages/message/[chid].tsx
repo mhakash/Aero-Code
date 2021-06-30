@@ -80,7 +80,7 @@ const Message: FC = () => {
         {messages.map((e) => (
           <div
             key={e.key}
-            className={`p-4 rounded-3xl m-2 bg-blue-100 max-w-2xl ${e.user === 'me' ? 'text-right self-end' : 'text-left self-start'}`}
+            className={`p-4 rounded-3xl m-2 max-w-2xl ${e.user === 'me' ? 'text-right self-end bg-blue-200' : 'text-left self-start bg-blue-800 text-gray-100'}`}
           >
             {e.message}
           </div>
