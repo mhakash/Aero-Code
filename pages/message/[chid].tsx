@@ -18,8 +18,7 @@ type Action =
     }
   | { type: 'clear' };
 
-const initialMessage: MessageType[] = [
-];
+const initialMessage: MessageType[] = [];
 
 const reducer = (state: MessageType[], action: Action): MessageType[] => {
   if (action.type === 'add') return [...state, action.payload];

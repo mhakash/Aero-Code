@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
+import InputBox from '../../components/InputBox';
 
 const Home: FC = () => {
   const auth = useAuth();
