@@ -107,3 +107,7 @@ export const getDiscussionByID = async (pid: string): Promise<Post> => {
 export const addDiscussion = async (body: string): Promise<void> => {
   const data = await post(`/discussion`, {body});
 }
+
+export const addVote = async (id: string, type: string, add: boolean): Promise<void> => {
+  await post(`/discussion/${id}`, {type: type, add: add});
+}
