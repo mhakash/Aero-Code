@@ -44,7 +44,7 @@ type CodeData = { data: string | Object; ext?: string; name: string };
 
 export const getCodeById = async (id: string): Promise<CodeData> => {
   const code = (await get(`/code/${id}`)) as CodeData;
-  console.log(code);
+  // console.log(code);
   return code;
 };
 
@@ -66,8 +66,8 @@ export const addFriend = async (id: string, name: string): Promise<void> => {
   // return data as User[];
 };
 
-export const addMessage = async (chat_room_id: string, msg: string):Promise<void> => {
-  const data = await post ('/message', { chat_room_id , msg });
+export const addMessage = async (chat_room_id: string, msg: string): Promise<void> => {
+  const data = await post('/message', { chat_room_id, msg });
 };
 
 export const getMessages = async (chid: string): Promise<Message[]> => {

@@ -3,11 +3,13 @@ import React, { ChangeEvent, useState } from 'react';
 import { uploadCode } from 'lib/api';
 import { useAlert } from 'react-alert';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
 const UploadReviewPage: React.FC = () => {
   const [file, setFile] = useState<File>();
   const alert = useAlert();
   const router = useRouter();
+  const { handleSubmit, register } = useForm();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -50,17 +52,42 @@ const UploadReviewPage: React.FC = () => {
     }
   };
 
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
-    <Layout header={<>Upload Code</>}>
-      <div>
-        <input
-          className="p-2 m-2 border-2"
-          onChange={handleChange}
-          type="file"
-          multiple={false}
-        />
-        <button className="p-2 m-2 border-2 border-gray-200" onClick={uploadFile}>
-          Upload
+    <Layout header={<>Add New Review Request</>}>
+      <div className="min-h-full flex flex-col justify-center m-auto">
+        <label htmlFor="file-upload" className="flex mb-4">
+          <input
+            id="file-upload"
+            name="file-upload"
+            className=" hidden"
+            onChange={handleChange}
+            type="file"
+            multiple={false}
+          />
+          <div className="m-2 mx-auto bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm cursor-pointer inline-block">
+            upload file
+          </div>
+        </label>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="text"
+            autoComplete="off"
+            placeholder="Add Reviewer"
+            {...register('friend')}
+            className="text-gray-700 bg-gray-200 py-2 px-4 text-center rounded-lg text-sm mx-auto outline-none"
+          />
+        </form>
+
+        <button
+          className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
+          onClick={uploadFile}
+        >
+          Submit Review Request
         </button>
       </div>
     </Layout>
