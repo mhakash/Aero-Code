@@ -37,7 +37,7 @@ const Message: FC = () => {
     const chat_room = '60d8d790983c82001d51fda0';
     const msg = message;
     await addMessage(chat_room, msg);
-    console.log(msg);
+    // console.log(msg);
     setMessage('');
 
     // Do someting;

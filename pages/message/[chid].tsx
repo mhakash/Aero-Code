@@ -43,22 +43,23 @@ const Message: FC = () => {
   const { data } = useSWR(
     () => (chid && auth.user ? `/message/${chid}` : null),
     () => getMessages(chid as string),
+    { refreshInterval: 1000 }
   );
 
   useEffect(() => {
     if (data) {
       dispatchMessage({ type: 'clear' });
-      console.log(data);
-      // data.forEach((e) => {
-      //   dispatchMessage({
-      //     type: 'add',
-      //     payload: {
-      //       user: e._id === auth.user?._id ? 'me' : 'other',
-      //       message: e.text,
-      //       key: e._id,
-      //     },
-      //   });
-      // });
+      // console.log(data);
+      data.forEach((e) => {
+        dispatchMessage({
+          type: 'add',
+          payload: {
+            user: e.sender_id === auth.user?._id ? 'me' : 'other',
+            message: e.text,
+            key: e._id,
+          },
+        });
+      });
     }
   }, [data]);
 
@@ -67,20 +68,16 @@ const Message: FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const chat_room = '60db06a1115622001d510506';
+    const chat_room = chid as string;
     const msg = message;
     await addMessage(chat_room, msg);
-    console.log(msg);
+    // console.log(msg);
     setMessage('');
 
     // Do someting;
     dispatchMessage({
       type: 'add',
       payload: { user: 'me', message: msg, key: Date.now() },
-    });
-    dispatchMessage({
-      type: 'add',
-      payload: { user: 'other', message: 'nice', key: Date.now() + 1 },
     });
   };
 
