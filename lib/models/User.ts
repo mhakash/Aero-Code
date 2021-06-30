@@ -62,7 +62,7 @@ export const addFriend = async (user_id: string, friend_id: string, friend_name:
       messages:[],
     };
     const result = await chatRoomCollection.insertOne(chatRoom);
-    console.log(result.insertedId);
+    // console.log(result.insertedId);
     
     const promise2 = await userCollection.updateOne({ _id: friend_id }, { $push: { friends: t2 ,chatRooms: result.insertedId} });
     const promise = await userCollection.updateOne({ _id: user_id }, { $push: { friends: t ,chatRooms: result.insertedId} });

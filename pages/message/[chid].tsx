@@ -49,7 +49,7 @@ const Message: FC = () => {
   useEffect(() => {
     if (data) {
       dispatchMessage({ type: 'clear' });
-      console.log(data);
+      // console.log(data);
       data.forEach((e) => {
         dispatchMessage({
           type: 'add',
@@ -71,7 +71,7 @@ const Message: FC = () => {
     const chat_room = '60db0e2ae4a137001dd52414';
     const msg = message;
     await addMessage(chat_room, msg);
-    console.log(msg);
+    // console.log(msg);
     setMessage('');
 
     // Do someting;

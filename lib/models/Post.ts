@@ -2,15 +2,15 @@ import { dbConnect } from '../utils/dbConnect';
 import { ObjectId } from 'mongodb';
 import { User, Post } from 'types';
 
-export const createPost = async (user_id: string, body: string): Promise<Post> => {
+export const createPost = async (user_id: string, user_name: string, body: string): Promise<Post> => {
   const temp = {
     user_id: user_id,
+    user_name: user_name,
     body: body,
     upvotes: 0,
     downvotes: 0,
     replies: [],
   };
-
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
     const res = await postCollection.insertOne(temp);
@@ -46,11 +46,12 @@ export const getPostById = async (id: string): Promise<Post | null> => {
 
 export const createReply = async (
   user_id: string,
+  user_name: string,
   parent_id: string,
   body: string,
 ): Promise<Post | null> => {
   try {
-    const newPost: Post = await createPost(user_id, body);
+    const newPost: Post = await createPost(user_id, user_name, body);
     const postCollection = (await dbConnect()).db.collection('posts');
 
     postCollection.updateOne(

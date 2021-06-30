@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Code, User, Message } from 'types';
+import { Code, User, Message, Post } from 'types';
 import firebase from '../utils/firebaseClient';
 
 const BASE_URL = '/api';
@@ -12,6 +12,7 @@ export const get = async (url: string): Promise<unknown> => {
     });
     return res.data;
   } catch (err) {
+    console.log(err)
     throw new Error('cannot get');
   }
 };
@@ -37,6 +38,7 @@ export const getUser = async (): Promise<User> => {
 export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   const codes = await get('/code');
   // console.log('data', codes);
+  console.log(codes)
   return codes as { _id: string; name: string }[];
 };
 
@@ -44,7 +46,7 @@ type CodeData = { data: string | Object; ext?: string; name: string };
 
 export const getCodeById = async (id: string): Promise<CodeData> => {
   const code = (await get(`/code/${id}`)) as CodeData;
-  console.log(code);
+  // console.log(code);
   return code;
 };
 
@@ -56,13 +58,13 @@ export const uploadCode = async (filename: string): Promise<any> => {
 
 export const searchFriend = async (name: string): Promise<User[]> => {
   const data = await post('/friend', { name });
-  console.log('data', data);
+  // console.log('data', data);
   return data as User[];
 };
 
 export const addFriend = async (id: string, name: string): Promise<void> => {
   const data = await post('/friend/add', { id, name });
-  console.log('data', data);
+  // console.log('data', data);
   // return data as User[];
 };
 
@@ -78,3 +80,28 @@ export const getMessages = async (chid: string): Promise<Message[]> => {
   //console.log(code);
   return data as Message[];
 };
+
+export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
+  let discussions: Post[] = [];
+
+  for (let index = 0; index < post_ids.length; index++) {
+    const e = post_ids[index];
+    const data = await getDiscussionByID(e);
+    discussions.push(data)
+  }
+  
+  return discussions
+}
+
+export const getDiscussionByID = async (pid: string): Promise<Post> => {
+  const data = await get(`/discussion/${pid}`);
+  // if (typeof code === 'object' && code !== null) {
+  //   return JSON.stringify(code, null, 2);
+  // }
+  //console.log(code);
+  return data as Post;
+};
+
+export const addDiscussion = async (body: string): Promise<void> => {
+  const data = await post(`/discussion`, {body});
+}

@@ -31,6 +31,7 @@ export type ChatRoom = {
 export type Post = {
   _id: string;
   user_id: string;
+  user_name: string;
   body: string;
   upvotes: number;
   downvotes: number;
