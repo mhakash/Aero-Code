@@ -12,7 +12,7 @@ export const get = async (url: string): Promise<unknown> => {
     });
     return res.data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     throw new Error('cannot get');
   }
 };
@@ -35,15 +35,17 @@ export const getUser = async (): Promise<User> => {
   return user as User;
 };
 
-export const getMessageFriends = async (): Promise<{ _id: string; friend_name: string ; recentmsg: Message }[]> => {
+export const getMessageFriends = async (): Promise<
+  { _id: string; friend_name: string; recentmsg: Message }[]
+> => {
   const data = await get('/message');
-  return data as { _id: string; friend_name: string ; recentmsg: Message }[];
+  return data as { _id: string; friend_name: string; recentmsg: Message }[];
 };
 
 export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
   const codes = await get('/code');
   // console.log('data', codes);
-  console.log(codes)
+  console.log(codes);
   return codes as { _id: string; name: string }[];
 };
 
@@ -55,8 +57,8 @@ export const getCodeById = async (id: string): Promise<CodeData> => {
   return code;
 };
 
-export const uploadCode = async (filename: string): Promise<any> => {
-  const data = await post(`/code?file=${filename}`);
+export const uploadCode = async (filename: string, reviewers: string[]): Promise<any> => {
+  const data = await post(`/code`, { file: filename, reviewers });
   // console.log('data', data);
   return data;
 };
@@ -73,16 +75,14 @@ export const addFriend = async (id: string, name: string): Promise<void> => {
   // return data as User[];
 };
 
-export const addMessage = async ( chid: string ,msg: string):Promise<void> => {
-  const data = await post (`/message/${chid}`, { msg });
+export const addMessage = async (chid: string, msg: string): Promise<void> => {
+  const data = await post(`/message/${chid}`, { msg });
 };
 
 export const getMessages = async (chid: string): Promise<Message[]> => {
   const data = await get(`/message/${chid}`);
 
   return data as Message[];
-<<<<<<< HEAD
-=======
 };
 
 export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
@@ -91,11 +91,11 @@ export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
   for (let index = 0; index < post_ids.length; index++) {
     const e = post_ids[index];
     const data = await getDiscussionByID(e);
-    discussions.push(data)
+    discussions.push(data);
   }
-  
-  return discussions
-}
+
+  return discussions;
+};
 
 export const getDiscussionByID = async (pid: string): Promise<Post> => {
   const data = await get(`/discussion/${pid}`);
@@ -104,7 +104,6 @@ export const getDiscussionByID = async (pid: string): Promise<Post> => {
   // }
   //console.log(code);
   return data as Post;
->>>>>>> main
 };
 
 export const addDiscussion = async (body: string): Promise<void> => {
