@@ -36,7 +36,7 @@ const Message: FC = () => {
   const { data } = useSWR(
     () => (chid && auth.user ? `/message/${chid}` : null),
     () => getMessages(chid as string),
-    { refreshInterval: 1000 }
+    { refreshInterval: 10000 }
   );
 
   useEffect(() => {
@@ -76,11 +76,11 @@ const Message: FC = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="flex flex-col">
         {messages.map((e) => (
           <div
             key={e.key}
-            className={`p-2 m-2 ${e.user === 'me' ? 'text-right' : 'text-left'}`}
+            className={`p-4 rounded-3xl m-2 bg-blue-100 max-w-2xl ${e.user === 'me' ? 'text-right self-end' : 'text-left self-start'}`}
           >
             {e.message}
           </div>
@@ -92,7 +92,7 @@ const Message: FC = () => {
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="p-2 m-2 border-gray-200 border-2 rounded-md"
+          className="p-2 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2"
         />
       </form>
     </Layout>
