@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { signout } from 'lib/utils/firebaseClient';
 import Link from 'next/link';
 import { useAuth } from 'lib/hooks/useAuth';
+import { ChevronDownIcon } from '@heroicons/react/outline';
 
 const HomeLayout: React.FC<{
   header?: JSX.Element;
@@ -11,55 +12,73 @@ const HomeLayout: React.FC<{
 
   return (
     <div className="flex min-h-screen">
-      <div className="bg-gray-700 text-gray-200 w-96 flex flex-col items-center flex-shrink-0 max-h-screen">
-        <div className="mt-8">
-          <Image
-            src="/images/aero-code-full.svg"
-            width={182}
-            height={67}
-            alt="aero-code-full"
-          />
-        </div>
-        <div className="flex-1 overflow-y-scroll no-scrollbar flex flex-col">
-          <div className="mt-4 m-2">
+      <div className="bg-gray-700 text-gray-200 w-64 flex flex-col px-8 py-4 pt-8 flex-shrink-0 max-h-screen text-sm">
+        <Link href="/">
+          <a>
+            <div className="w-32">
+              <Image
+                src="/images/aero-code-full.svg"
+                width={182}
+                height={67}
+                alt="aero-code-full"
+              />
+            </div>
+          </a>
+        </Link>
+
+        <div className="flex-1 mt-8 overflow-y-scroll no-scrollbar flex flex-col">
+          <div className="mb-2">
             <Link href="/">
-              <a>Reviews</a>
+              <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                <span>Reviews</span>
+                <ChevronDownIcon className="w-4 h-4" />
+              </a>
             </Link>
           </div>
-          <div className="m-2">
+
+          <div className="mb-2">
             <Link href="/friend">
-              <a>Friends</a>
+              <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                <span>Friends</span>
+                <ChevronDownIcon className="w-4 h-4" />
+              </a>
             </Link>
           </div>
-          <div className="m-2">
+
+          <div className="mb-2">
             <Link href="/message">
-              <a>Messages</a>
+              <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                <span>Messages</span>
+                <ChevronDownIcon className="w-4 h-4" />
+              </a>
             </Link>
           </div>
-          <div className="m-2">
+
+          <div className="mb-2">
             <Link href="/discussion">
-              <a>Discussion</a>
+              <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                <span>Discussion</span>
+                <ChevronDownIcon className="w-4 h-4" />
+              </a>
             </Link>
           </div>
         </div>
-        <div className="">
-          <div className="mb-12 flex items-center">
-            <div className="mr-8">
-              <div className="rounded-full">
+
+        <div className="mb-12">
+          <div className="flex items-center">
+            <div className="">
+              <div className="rounded-full overflow-hidden mr-5">
                 {auth.user?.avatar && (
-                  <Image src={auth.user.avatar} alt="avatar" width={16} height={16} />
+                  <Image src={auth.user.avatar} alt="avatar" width={40} height={40} />
                 )}
               </div>
             </div>
-            <div>
-              <div className=" m-2">profile</div>
-              <button onClick={signout} className="m-2 ">
+            <div className="text-xs">
+              <div className="mb-1.5">profile</div>
+              <button onClick={signout} className="">
                 Log out
               </button>
             </div>
-          </div>
-          <div className="mr-8">
-            <h3>{auth.user?.name} </h3>
           </div>
         </div>
       </div>
