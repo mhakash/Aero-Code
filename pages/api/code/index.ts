@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         const post = await createPost('code', code._id);
 
         // TODO: change localhost to minio-url
-        post.url = post.url.replace('minio', 'localhost');
+        if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
 
         console.log(post);
         res.status(200).json(post);
