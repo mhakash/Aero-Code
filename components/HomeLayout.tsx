@@ -74,9 +74,9 @@ const HomeLayout: React.FC<{
               </div>
             </div>
             <div className="text-xs">
-              <div className="mb-1.5">profile</div>
+              <div className="mb-1.5">Profile</div>
               <button onClick={signout} className="">
-                Log out
+                Logout
               </button>
             </div>
           </div>
