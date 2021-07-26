@@ -4,6 +4,7 @@ import React, { FC, useEffect, useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
+import Image from 'next/image';
 
 type MessageType = {
   user: 'me' | 'other';
@@ -75,24 +76,36 @@ const Message: FC = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="flex flex-col">
         {messages.map((e) => (
           <div
             key={e.key}
-            className={`p-2 m-2 ${e.user === 'me' ? 'text-right' : 'text-left'}`}
+            className={`p-4 rounded-3xl m-2 max-w-2xl ${
+              e.user === 'me'
+                ? 'text-right self-end bg-blue-200'
+                : 'text-left self-start bg-blue-800 text-gray-100'
+            }`}
           >
             {e.message}
           </div>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex items-center">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="p-2 m-2 border-gray-200 border-2 rounded-md"
+          className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
         />
+        <button type="submit" className="mt-2 ml-2">
+          <Image
+            src={'/images/send-button.svg'}
+            width={36}
+            height={36}
+            alt="upvote"
+          />
+        </button>
       </form>
     </Layout>
   );

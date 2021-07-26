@@ -26,9 +26,8 @@ const Layout: React.FC<{
             </div>
 
             <div className="flex-1 flex justify-center flex-col">
-              <div>You are not signed in</div>
               <Link href="/signin">
-                <a className=" pb-2 m-2 mb-40 border-b-2 text-center border-gray-400 hover:border-gray-700  ">
+                <a className=" px-4 py-2 m-2 mb-40 rounded-md text-center bg-green-700 text-gray-50 border hover:bg-green-800  ">
                   Sign in
                 </a>
               </Link>

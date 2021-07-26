@@ -29,12 +29,13 @@ services:
     hostname: minio
     ports:
       - '9000:9000'
+      - '9001:9001'
     volumes:
       - datastore:/data
     environment:
       MINIO_ROOT_USER: minio123
       MINIO_ROOT_PASSWORD: minio123
-    command: server /data
+    command: server /data --console-address ":9001"
     # networks:
     #   mynet:
     #     aliases:

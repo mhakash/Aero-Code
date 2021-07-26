@@ -16,7 +16,7 @@ const Home: FC = () => {
           <div>Reviews</div>
           <div>
             <Link href="/upload-review">
-              <a>Adds review</a>
+              <a>Add Review</a>
             </Link>
           </div>
         </>
