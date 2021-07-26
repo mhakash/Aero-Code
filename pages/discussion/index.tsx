@@ -13,6 +13,7 @@ const Home: FC = () => {
   const { data } = useSWR(
     () => (auth.user ? `/discussion` : null),
     () => getDiscussions(auth.user?.posts ?? []),
+    { refreshInterval: 1000 },
   );
 
   return (
