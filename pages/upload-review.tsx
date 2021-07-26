@@ -75,7 +75,7 @@ const UploadReviewPage: React.FC = () => {
               multiple={false}
             />
             <div className="m-2 mx-auto bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm cursor-pointer inline-block">
-              upload file
+              Upload
             </div>
           </label>
           {/* <form onSubmit={handleSubmit(onSubmit)}>
