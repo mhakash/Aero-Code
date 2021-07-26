@@ -2,6 +2,7 @@ import { addVote } from 'lib/api/index';
 import Image from 'next/image';
 import React, { FC, useState } from 'react';
 import { Post } from 'types';
+import Link from 'next/link';
 
 const Discussion: FC<{ post: Post }> = ({ post }) => {
   const [upVote, setUpVote] = useState(false);
@@ -22,6 +23,16 @@ const Discussion: FC<{ post: Post }> = ({ post }) => {
     <div className="my-2 w-full max-w-3xl flex flex-col bg-blue-100 rounded-xl border-2">
       <div className="px-4 pt-3 m-2 font-bold">{post.user_name}</div>
       <div className="pb-5 px-4 mx-2"> {post.body} </div>
+      
+      <div className="pb-5 px-4 mx-2"> 
+          <Link href={`/code/${post.codes?.code_id}`} key={post.codes?.code_id}>
+            <a>
+              <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
+                {post.codes?.filename}
+              </div>
+            </a>
+          </Link>
+        </div>
       <div className="pb-5 px-4 mx-2 flex">
         <div className="mr-2 cursor-pointer">
           <Image
