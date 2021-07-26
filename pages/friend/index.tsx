@@ -18,7 +18,7 @@ const Home: FC = () => {
           <div>Friends</div>
           <div>
             <Link href="/friend/add">
-              <a>Add friend</a>
+              <a>Add Friend</a>
             </Link>
           </div>
         </>
