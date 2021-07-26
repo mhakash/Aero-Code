@@ -53,7 +53,6 @@ const HomeLayout: React.FC<{
               </a>
             </Link>
           </div>
-
           <div className="mb-2">
             <Link href="/discussion">
               <a className="flex justify-between p-1 rounded hover:text-gray-100">
@@ -62,8 +61,17 @@ const HomeLayout: React.FC<{
               </a>
             </Link>
           </div>
+        <div>
+          <div className="mb-2">
+            <Link href="/group">
+              <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                <span>Groups</span>
+                <ChevronDownIcon className="w-4 h-4" />
+              </a>
+            </Link>
+          </div>
         </div>
-
+        </div>
         <div className="mb-12">
           <div className="flex items-center">
             <div className="">
@@ -82,6 +90,7 @@ const HomeLayout: React.FC<{
           </div>
         </div>
       </div>
+      
 
       <div className="flex flex-col flex-1 max-h-screen">
         <div className=" bg-gray-200 w-full p-4 flex justify-between">

@@ -1,6 +1,6 @@
 import { dbConnect } from '../utils/dbConnect';
 import { ObjectId } from 'mongodb';
-import { Code, User } from 'types';
+import { Code, User, Group } from 'types';
 
 export const createCode = async (
   user_id: string,
@@ -29,7 +29,47 @@ export const createCode = async (
 
     return code;
   } catch (err) {
-    throw new Error('Could not create user\n' + err?.message);
+    throw new Error('Could not create code\n' + err?.message);
+  }
+};
+
+export const createGroupCode = async (
+  user_id: string,
+  name: string,
+  grid: string,
+): Promise<Code> => {
+  const temp = {
+    user_id: user_id,
+    name: name,
+  };
+
+  try {
+    const codeCollection = (await dbConnect()).db.collection('codes');
+    const res = await codeCollection.insertOne(temp);
+
+    //update reviews of res & add post to group
+    const groupCollection = (await dbConnect()).db.collection('groups');
+    const group: Group = await groupCollection.findOne({_id: new ObjectId(grid)});
+
+    let memberids : string[] = group.members?.map(x=>x._id)??[];
+    memberids = memberids.filter(item => item != user_id);
+    
+    console.log("group member sonkha :"+ String(memberids.length));
+    if(memberids.length>0){
+      await codeCollection.updateOne(
+        {_id: new ObjectId(res.insertedId)},
+        { $push: { reviewers: memberids } },
+      );
+    }
+    const code: Code = {
+      ...temp,
+      _id: res.insertedId,
+    };
+
+    
+    return code;
+  } catch (err) {
+    throw new Error('Could not create code\n' + err?.message);
   }
 };
 

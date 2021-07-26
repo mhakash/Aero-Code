@@ -113,3 +113,20 @@ export const addDiscussion = async (body: string): Promise<void> => {
 export const addVote = async (id: string, type: string, add: boolean): Promise<void> => {
   await post(`/discussion/${id}`, {type: type, add: add});
 }
+
+export const createNewGroup = async (groupname: string, members: {_id: string, name: string, role: number}[]): Promise<any> => {
+  const data = await post(`/group/create`, { groupname, members });
+  // console.log('data', data);
+  return data;
+};
+
+export const getGroupDiscussions = async (grid: string): Promise<Post[]> => {
+  let discussions = await await get(`/group/${grid}`);
+
+  return discussions as Post[];
+};
+export const addGroupDiscussion = async (filename: string,txt: string, grid: string): Promise<any> => {
+  const data = await post(`/group/${grid}/add`, {filename, txt, grid});
+
+  return data;
+}

@@ -9,6 +9,7 @@ export type User = {
   codes?: { _id: string; name: string }[];
   chatRooms?: { _id: string; friend_id: string ; friend_name: string }[];
   posts?: string[];
+  groups?: { _id: string; name: string }[];
 };
 
 export type Code = {
@@ -36,4 +37,11 @@ export type Post = {
   upvotes: number;
   downvotes: number;
   replies?: string[];
+  codes?: { filename: string ,code_id: string};
+};
+export type Group = {
+  _id: string;
+  name: string;
+  members?: { _id: string; name: string, role: number }[];
+  posts_id: string[];
 };
