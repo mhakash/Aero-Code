@@ -1,9 +1,11 @@
 import S3 from 'aws-sdk/clients/s3';
 
+const LOCAL = process.env.LOCAL;
+
 const s3 = new S3({
-  accessKeyId: 'minio123',
-  secretAccessKey: 'minio123',
-  endpoint: 'http://minio:9000',
+  accessKeyId: LOCAL ? 'minioadmin' : 'minio123',
+  secretAccessKey: LOCAL ? 'minioadmin' : 'minio123',
+  endpoint: LOCAL ? 'http://localhost:9000' : 'http://minio:9000',
   s3ForcePathStyle: true, // needed with minio?
   signatureVersion: 'v4',
 });
