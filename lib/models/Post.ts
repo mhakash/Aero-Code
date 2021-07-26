@@ -2,7 +2,11 @@ import { dbConnect } from '../utils/dbConnect';
 import { ObjectId } from 'mongodb';
 import { User, Post } from 'types';
 
-export const createPost = async (user_id: string, user_name: string, body: string): Promise<Post> => {
+export const createPost = async (
+  user_id: string,
+  user_name: string,
+  body: string,
+): Promise<Post> => {
   const temp = {
     user_id: user_id,
     user_name: user_name,
@@ -61,5 +65,19 @@ export const createReply = async (
     return newPost;
   } catch (err) {
     throw new Error('connection error');
+  }
+};
+
+export const addVote = async (id: string, type: string, add:boolean): Promise<void> => {
+  try {
+    const postCollection = (await dbConnect()).db.collection('posts');
+    const value = add ? 1 : -1;
+    if (type === 'upvote') {
+      postCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { upvotes: value } });
+    } else if (type === 'downvote') {
+      postCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { downvotes: value } });
+    }
+  } catch (err) {
+    throw new Error('cannot increase upvote');
   }
 };

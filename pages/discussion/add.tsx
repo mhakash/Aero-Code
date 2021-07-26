@@ -12,14 +12,15 @@ import Image from 'next/image';
 const Home: FC = () => {
   const auth = useAuth();
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
   // const { data } = useSWR(
   //   () => (pid && auth.user ? `/codes/${pid}` : null),
   //   () => getCodeById(pid as string),
   // );
 
-  const onSubmit = async (data: {body: string}) => {
+  const onSubmit = async (data: { body: string }) => {
     await addDiscussion(data.body);
-    return null;
+    router.push('/discussion', '/discussion');
   };
 
   return (
@@ -30,17 +31,18 @@ const Home: FC = () => {
         </>
       }
     >
-      
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          {...register('body')}
-          className="m-2 p-2 border-2 border-gray-400"
-        />
-        <button type="submit" className="m-2 p-2 border-2 border-gray-400">
-          Add a Discussion
-        </button>
-      </form>
+      <div className="my-2 h-full w-full max-w-3xl flex flex-col">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <textarea
+            autoComplete="off"
+            {...register('body')}
+            className="m-2 p-2 max-w-2xl w-full h-52 border-2 border-gray-400"
+          />
+          <button type="submit" className="m-2 p-2 border-2 border-gray-400">
+            Post Discussion
+          </button>
+        </form>
+      </div>
     </Layout>
   );
 };
