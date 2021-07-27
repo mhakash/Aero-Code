@@ -40,7 +40,13 @@ export type Post = {
   replies?: string[];
   codes?: { filename: string; code_id: string };
   group_name?: string;
+  review_content?: ReviewContent;
 };
+
+export type ReviewContent = {
+  severity?: string;
+  type?: string;
+}
 
 export type Group = {
   _id: string;
