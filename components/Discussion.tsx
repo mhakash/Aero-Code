@@ -41,7 +41,7 @@ const Discussion: FC<{ post: Post }> = ({ post }) => {
       <div className="px-4 pt-3 m-2 font-bold">{post.user_name}</div>
       <div className="pb-5 px-4 mx-2"> {post.body} </div>
 
-      {post.codes && (
+      {post.codes?.code_id && (
         <div className="pb-5 px-4 mx-2">
           <Link href={`/code/${post.codes?.code_id}`} key={post.codes?.code_id}>
             <a>

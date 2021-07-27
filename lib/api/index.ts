@@ -141,3 +141,7 @@ export const addGroupMember = async (id: string, name: string, grid: string): Pr
   
   return data as {posts: Post[], group: Group, friends: {_id: string, name: string}[]};
 };
+
+export const addReply = async (parent_id: string, body: string): Promise<void> => {
+  await post(`/discussion/${parent_id}/add`, { body });
+};
