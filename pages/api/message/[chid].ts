@@ -11,10 +11,16 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   try {
     if (req.method === 'GET') {
       await decodeToken(req.headers['x-firebase-token'] as string);
-      const msgs = await getMessageByChatRoomId(key);
+      const t = await decodeToken(token as string);
+      const user_id = t.uid;
+      
+      const data = await getMessageByChatRoomId(key, user_id);
+      console.log(data);
+      //const msgs = data.msgs;
+      //const chat_details = data.chat;
       // console.log(msgs);
       // res.status(200).setHeader('Content-Type', 'image/jpeg').end(data, 'binary');
-      res.status(200).json(msgs);
+      res.status(200).json(data);
     } else if (req.method === 'POST') {
       try {
         const t = await decodeToken(token as string);

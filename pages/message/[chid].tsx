@@ -40,10 +40,10 @@ const Message: FC = () => {
   );
 
   useEffect(() => {
-    if (data) {
+    if (data?.msgs) {
       dispatchMessage({ type: 'clear' });
       // console.log(data);
-      data.forEach((e) => {
+      data.msgs.forEach((e) => {
         dispatchMessage({
           type: 'add',
           payload: {
@@ -54,7 +54,7 @@ const Message: FC = () => {
         });
       });
     }
-  }, [data]);
+  }, [data?.msgs]);
 
   const [message, setMessage] = useState('');
   const [messages, dispatchMessage] = useReducer(reducer, initialMessage);
@@ -75,7 +75,27 @@ const Message: FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout
+    header={
+      <>
+        <div className="px-4 flex flex-row">
+            <div>
+              {data?.chat.friend_avatar && (
+                <Image
+                  className="rounded-full mr-5"
+                  src={data.chat.friend_avatar}
+                  alt="avatar"
+                  width={55}
+                  height={55}
+                />
+              )}
+            </div>
+            <div className="flex flex-col"><div className="font-bold px-3 pt-3 ">{data?.chat.friend_name}{' '}</div>
+            </div>
+          </div>
+      </>
+    }
+    >
       <div className="flex flex-col">
         {messages.map((e) => (
           <div
