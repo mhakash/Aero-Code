@@ -4,9 +4,9 @@ export type User = {
   email: string;
   avatar: string;
   profileCompleted?: boolean;
-  friends?: { _id: string; name: string }[];
+  friends?: { _id: string; name: string; avatar: string; }[];
   codes?: { _id: string; name: string }[];
-  chatRooms?: { _id: string; friend_id: string; friend_name: string }[];
+  chatRooms?: { _id: string; friend_id: string; friend_name: string; friend_avatar: string }[];
   posts?: string[];
   groups?: { _id: string; name: string }[];
 };
