@@ -6,7 +6,9 @@ export const createPost = async (
   user_id: string,
   user_name: string,
   body: string,
-  is_reply: boolean = false
+  is_reply: boolean = false,
+  code_id: string = '',
+  code_name: string = '',
 ): Promise<Post> => {
   const temp = {
     user_id: user_id,
@@ -16,6 +18,7 @@ export const createPost = async (
     downvotes: 0,
     is_reply: is_reply,
     replies: [],
+    codes: { filename: code_name, code_id: code_id },
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
@@ -46,7 +49,7 @@ export const createGroupPost = async (
   code_id: string,
   code_name: string,
   grid: string,
-  is_reply: boolean = false
+  is_reply: boolean = false,
 ): Promise<UpdateWriteOpResult> => {
   const temp = {
     user_id: user_id,
@@ -56,12 +59,11 @@ export const createGroupPost = async (
     downvotes: 0,
     is_reply: is_reply,
     replies: [],
-    codes: {filename: code_name ,code_id: code_id}
+    codes: { filename: code_name, code_id: code_id },
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
     const res = await postCollection.insertOne(temp);
-    
 
     const groupCollection = (await dbConnect()).db.collection('groups');
     const res2 = await groupCollection.updateOne(

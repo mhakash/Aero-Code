@@ -2,7 +2,7 @@ import { createGroupCode, getCodesByUserId } from 'lib/models/Code';
 import { createGroupPost } from 'lib/models/Post';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { decodeToken } from '../../../../lib/utils/firebaseAdmin';
-import { createPost } from '../../../../lib/utils/objectStorage';
+import { createObject } from '../../../../lib/utils/objectStorage';
 import { Code } from 'types';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         
         // TODO: change localhost to minio-url
         if(filename!==""){
-          const post = await createPost('code', code_id);
+          const post = await createObject('code', code_id);
           if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
           console.log(post);
           res.status(200).json(post);

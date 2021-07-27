@@ -10,7 +10,7 @@ const s3 = new S3({
   signatureVersion: 'v4',
 });
 
-export const createPost = async (
+export const createObject = async (
   bucket: string,
   key: string,
 ): Promise<S3.PresignedPost> => {
