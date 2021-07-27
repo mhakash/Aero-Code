@@ -4,9 +4,9 @@ export type User = {
   email: string;
   avatar: string;
   profileCompleted?: boolean;
-  friends?: { _id: string; name: string }[];
+  friends?: { _id: string; name: string; avatar: string; }[];
   codes?: { _id: string; name: string }[];
-  chatRooms?: { _id: string; friend_id: string; friend_name: string }[];
+  chatRooms?: { _id: string; friend_id: string; friend_name: string; friend_avatar: string }[];
   posts?: string[];
   groups?: { _id: string; name: string }[];
 };
@@ -40,7 +40,13 @@ export type Post = {
   replies?: string[];
   codes?: { filename: string; code_id: string };
   group_name?: string;
+  review_content?: ReviewContent;
 };
+
+export type ReviewContent = {
+  severity?: string;
+  type?: string;
+}
 
 export type Group = {
   _id: string;

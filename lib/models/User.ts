@@ -58,8 +58,9 @@ export const addFriend = async (
   try {
     const userCollection = (await dbConnect()).db.collection('users');
     const user = await userCollection.findOne({ _id: user_id });
-    const t = { _id: friend_id, name: friend_name };
-    const t2 = { _id: user_id, name: user.name };
+    const frnd = await userCollection.findOne({ _id: friend_id });
+    const t = { _id: friend_id, name: friend_name , avatar: frnd.avatar};
+    const t2 = { _id: user_id, name: user.name, avatar: user.avatar };
 
     const chatRoomCollection = (await dbConnect()).db.collection('ChatRoom');
     const chatRoom = {
@@ -77,6 +78,7 @@ export const addFriend = async (
             _id: result.insertedId,
             friend_id: user_id,
             friend_name: user.name,
+            friend_avatar: user.avatar,
           },
         },
       },
@@ -90,6 +92,7 @@ export const addFriend = async (
             _id: result.insertedId,
             friend_id: user_id,
             friend_name: friend_name,
+            friend_avatar: frnd.avatar,
           },
         },
       },

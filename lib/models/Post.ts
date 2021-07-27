@@ -1,6 +1,6 @@
 import { dbConnect } from '../utils/dbConnect';
 import { ObjectID, ObjectId, UpdateWriteOpResult } from 'mongodb';
-import { User, Post, Code, Group } from 'types';
+import { User, Post, Code, Group, ReviewContent } from 'types';
 
 export const createPost = async (
   user_id: string,
@@ -10,6 +10,7 @@ export const createPost = async (
   code_id: string = '',
   code_name: string = '',
   reviwers: string[] = [],
+  review_content: ReviewContent = {},
 ): Promise<Post> => {
   const temp = {
     user_id: user_id,
@@ -21,6 +22,7 @@ export const createPost = async (
     replies: [],
     codes: { filename: code_name, code_id: code_id },
     group_name: '',
+    review_content: review_content,
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
@@ -119,9 +121,10 @@ export const createReply = async (
   user_name: string,
   parent_id: string,
   body: string,
+  review_content: ReviewContent = {},
 ): Promise<Post | null> => {
   try {
-    const newPost: Post = await createPost(user_id, user_name, body, true);
+    const newPost: Post = await createPost(user_id, user_name, body, true, '', '', [], review_content);
     const postCollection = (await dbConnect()).db.collection('posts');
 
     postCollection.updateOne(
@@ -145,5 +148,15 @@ export const addVote = async (id: string, type: string, add: boolean): Promise<v
     }
   } catch (err) {
     throw new Error('cannot increase upvote');
+  }
+};
+
+export const getPostIdByCodeId = async (id: string): Promise<string> => {
+  try {
+    const postCollection = (await dbConnect()).db.collection('posts');
+    const post: Post = await postCollection.findOne({ 'codes.code_id': id });
+    return post._id;
+  } catch (err) {
+    throw new Error('cannot find post id');
   }
 };
