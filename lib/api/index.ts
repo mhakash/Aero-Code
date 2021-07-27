@@ -36,10 +36,10 @@ export const getUser = async (): Promise<User> => {
 };
 
 export const getMessageFriends = async (): Promise<
-  { _id: string; friend_name: string; recentmsg: Message }[]
+  { _id: string; friend_name: string; recentmsg: Message , friend_avatar: string}[]
 > => {
   const data = await get('/message');
-  return data as { _id: string; friend_name: string; recentmsg: Message }[];
+  return data as { _id: string; friend_name: string; recentmsg: Message,friend_avatar: string }[];
 };
 
 export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {

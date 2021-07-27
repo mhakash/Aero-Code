@@ -76,17 +76,17 @@ export const getLastMessage = async (_id: string): Promise<Message> => {
 
 export const getMessageFriends = async (
   user_id: string,
-): Promise<{ _id: string; friend_name: string; recentmsg: Message }[]> => {
+): Promise<{ _id: string; friend_name: string; recentmsg: Message, friend_avatar: string }[]> => {
   try {
     const userCollection = (await dbConnect()).db.collection('users');
     const currentUser = await userCollection.findOne({ _id: user_id });
     //console.log("current user paise "+currentUser);
-    let chat_rooms: { _id: string; friend_id: string; friend_name: string }[] =
+    let chat_rooms: { _id: string; friend_id: string; friend_name: string, friend_avatar: string }[] =
       currentUser.chatRooms ?? [];
     //let chatRoomIdArray = chat_rooms.map((s) => new ObjectId(s._id));
     //console.log(chatRoomIdArray);
 
-    const result: { _id: string; friend_name: string; recentmsg: Message }[] = [];
+    const result: { _id: string; friend_name: string; recentmsg: Message, friend_avatar: string }[] = [];
 
     for (let index = 0; index < chat_rooms.length; index++) {
       const temp_msg = await getLastMessage(chat_rooms[index]._id);
@@ -94,6 +94,7 @@ export const getMessageFriends = async (
         _id: chat_rooms[index]._id,
         friend_name: chat_rooms[index].friend_name,
         recentmsg: temp_msg,
+        friend_avatar: chat_rooms[index].friend_avatar,
       });
     }
 
