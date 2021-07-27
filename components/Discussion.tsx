@@ -38,7 +38,13 @@ const Discussion: FC<{ post: Post }> = ({ post }) => {
 
   return (
     <div className="my-2 w-full max-w-3xl flex flex-col bg-blue-100 rounded-xl border-2">
-      <div className="px-2 pt-3 m-2"> <span className="font-bold px-2">{post.user_name}</span> {post.group_name && <span className=" font-medium text-sm">{`posted in ${post.group_name}`}</span>} </div>
+      <div className="px-2 pt-3 m-2">
+        {' '}
+        <span className="font-bold px-2">{post.user_name}</span>{' '}
+        {post.group_name && (
+          <span className=" font-medium text-sm">{`posted in ${post.group_name}`}</span>
+        )}{' '}
+      </div>
       <div className="pb-5 px-4 mx-2"> {post.body} </div>
 
       {post.codes?.code_id && (

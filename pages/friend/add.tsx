@@ -27,7 +27,7 @@ const Home: FC = () => {
 
   const handleAddFriend = async (id: string, name: string) => {
     await addFriend(id, name);
-    router.push('/friend')
+    router.push('/friend');
     return null;
   };
 

@@ -36,7 +36,9 @@ export const getMessageByChatRoomId = async (
 ): Promise<Message[]> => {
   try {
     const chatRoomCollection = (await dbConnect()).db.collection('ChatRoom');
-    const chatRoom = await chatRoomCollection.findOne({ _id: new ObjectId(chat_room_id) });
+    const chatRoom = await chatRoomCollection.findOne({
+      _id: new ObjectId(chat_room_id),
+    });
 
     let stringIds: string[] = chatRoom.messages ?? [];
     let objectIdArray = stringIds.map((s) => new ObjectId(s));
@@ -53,42 +55,48 @@ export const getMessageByChatRoomId = async (
   }
 };
 
-export const getLastMessage = async(_id: string): Promise< Message >=>{
+export const getLastMessage = async (_id: string): Promise<Message> => {
   try {
     const chatRoomCollection = (await dbConnect()).db.collection('ChatRoom');
     const chatRoom = await chatRoomCollection.findOne({ _id: new ObjectId(_id) });
 
     let stringIds: string[] = chatRoom.messages ?? [];
     let objectIdArray = stringIds.map((s) => new ObjectId(s));
-    const last_msg_id = objectIdArray[objectIdArray.length-1];
-    
+    const last_msg_id = objectIdArray[objectIdArray.length - 1];
+
     const messageCollection = (await dbConnect()).db.collection('Message');
     const result = messageCollection.findOne({ _id: last_msg_id });
-    
+
     return result;
   } catch (err) {
-    console.log("Error in getLastMessage")
+    console.log('Error in getLastMessage');
     throw new Error('cannot get');
   }
 };
 
-
-export const getMessageFriends = async (user_id: string,): Promise<{ _id: string; friend_name: string ; recentmsg: Message }[]> => {
-  try{
+export const getMessageFriends = async (
+  user_id: string,
+): Promise<{ _id: string; friend_name: string; recentmsg: Message }[]> => {
+  try {
     const userCollection = (await dbConnect()).db.collection('users');
-    const currentUser = await userCollection.findOne({ _id: user_id});
+    const currentUser = await userCollection.findOne({ _id: user_id });
     //console.log("current user paise "+currentUser);
-    let chat_rooms:{ _id: string; friend_id: string ; friend_name: string }[] = currentUser.chatRooms??[];
+    let chat_rooms: { _id: string; friend_id: string; friend_name: string }[] =
+      currentUser.chatRooms ?? [];
     //let chatRoomIdArray = chat_rooms.map((s) => new ObjectId(s._id));
     //console.log(chatRoomIdArray);
-    
-    const result : { _id: string; friend_name: string ; recentmsg: Message }[] = [];
-    
+
+    const result: { _id: string; friend_name: string; recentmsg: Message }[] = [];
+
     for (let index = 0; index < chat_rooms.length; index++) {
       const temp_msg = await getLastMessage(chat_rooms[index]._id);
-      result.push({_id: chat_rooms[index]._id , friend_name:chat_rooms[index].friend_name, recentmsg :temp_msg});
+      result.push({
+        _id: chat_rooms[index]._id,
+        friend_name: chat_rooms[index].friend_name,
+        recentmsg: temp_msg,
+      });
     }
-    
+
     return result;
   } catch (err) {
     throw new Error('cannot get');

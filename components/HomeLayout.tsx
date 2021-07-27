@@ -96,8 +96,6 @@ const HomeLayout: React.FC<{
                 </Link>
               </div>
             </div>
-            
-            
             <div className="mb-12">
               <div className="flex items-center">
                 <div className="">

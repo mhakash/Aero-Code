@@ -12,30 +12,29 @@ const CreateGroupPage: React.FC = () => {
   const alert = useAlert();
   const router = useRouter();
   const { handleSubmit, register } = useForm();
-  const [reviewers, setReviewers] = useState<{_id: string, name: string, role: number}[]>([]);
+  const [reviewers, setReviewers] = useState<
+    { _id: string; name: string; role: number }[]
+  >([]);
   const [groupname, setGroupName] = useState('');
-
- 
 
   const CreateGroup = async () => {
     const data = await createNewGroup(groupname, reviewers);
     router.push('/group');
   };
 
-
   return (
     <Layout header={<>Add New Group</>}>
       <div className="min-h-full flex flex-row">
         <div className="flex flex-col justify-center m-auto">
           <label htmlFor="file-upload" className="flex mb-4">
-          <input
-          type="text"
-          value={groupname}
-          onChange={(e) => setGroupName(e.target.value)}
-          className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
-        />
+            <input
+              type="text"
+              value={groupname}
+              onChange={(e) => setGroupName(e.target.value)}
+              className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
+            />
           </label>
-          
+
           <button
             className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
             onClick={CreateGroup}
@@ -43,8 +42,7 @@ const CreateGroupPage: React.FC = () => {
             Create Group
           </button>
         </div>
-        
-        
+
         <div className="m-2">
           <div className="my-4">Add Members</div>
           {auth.user?.friends?.map((e) => (
@@ -54,7 +52,7 @@ const CreateGroupPage: React.FC = () => {
                 onClick={() => {
                   reviewers.find((x) => x._id === e._id)
                     ? setReviewers(reviewers.filter((x) => x._id !== e._id))
-                    : setReviewers([...reviewers, {_id: e._id,name: e.name,role: 0}]);
+                    : setReviewers([...reviewers, { _id: e._id, name: e.name, role: 0 }]);
                 }}
               >
                 {reviewers.find((x) => x._id === e._id) ? (

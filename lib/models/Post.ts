@@ -88,16 +88,15 @@ export const createGroupPost = async (
 
     let memberids: string[] = group.members?.map((x) => x._id) ?? [];
     memberids = memberids.filter((item) => item != user_id);
-    
+
     const userCollection = (await dbConnect()).db.collection('users');
-    for (let i = 0; i < memberids.length; i++)
-    {
+    for (let i = 0; i < memberids.length; i++) {
       await userCollection.updateOne(
         { _id: memberids[i] },
         { $push: { posts: res.insertedId } },
       );
     }
-    
+
     return res2;
   } catch (err) {
     throw new Error('Could not create post\n' + err?.message);

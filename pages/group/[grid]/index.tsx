@@ -48,31 +48,28 @@ const Home: FC = () => {
           );
       })}
 
-
-        <h1>Group Members</h1>
-        {data?.group?.members?.map((e) => (
-            <div key={e._id} className="my-2">
-              <div className="flex cursor-pointer">
-                <div className="font-semibold text-sm text-gray-700">{e.name}</div>
-              </div>
-            </div>
-        ))}
-        <h1>Add Members</h1>
-        {data?.friends?.map((e) => (
-            <div key={e._id} className="my-2">
-              <div className="flex cursor-pointer">
-                <div className="font-semibold text-sm text-gray-700">{e.name}</div>
-                <button
-                onClick={() => handleAddMember(e._id, e.name)}
-                className="p-2 mr-4 border-2 border-gray-500 text-sm rounded-md"
-                >
-                Add to Group
-              </button>
-              </div>
-            </div>
-        ))}
-        
-          
+      <h1>Group Members</h1>
+      {data?.group?.members?.map((e) => (
+        <div key={e._id} className="my-2">
+          <div className="flex cursor-pointer">
+            <div className="font-semibold text-sm text-gray-700">{e.name}</div>
+          </div>
+        </div>
+      ))}
+      <h1>Add Members</h1>
+      {data?.friends?.map((e) => (
+        <div key={e._id} className="my-2">
+          <div className="flex cursor-pointer">
+            <div className="font-semibold text-sm text-gray-700">{e.name}</div>
+            <button
+              onClick={() => handleAddMember(e._id, e.name)}
+              className="p-2 mr-4 border-2 border-gray-500 text-sm rounded-md"
+            >
+              Add to Group
+            </button>
+          </div>
+        </div>
+      ))}
     </Layout>
   );
 };
