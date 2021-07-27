@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { decodeToken } from '../../../lib/utils/firebaseAdmin';
 import { createObject } from '../../../lib/utils/objectStorage';
 import { Code } from 'types';
+import { createPost } from 'lib/models/Post';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const token = req.headers['x-firebase-token'];
@@ -10,21 +11,23 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   if (token) {
     const t = await decodeToken(token as string);
     const user_id = t.uid;
+    const user_name = t.name;
 
     if (req.method === 'POST') {
       try {
         const file_name = req.body.file;
         const reviewers: string[] = req.body.reviewers ?? [];
 
-        console.log(file_name, reviewers);
+        // console.log(file_name, reviewers);
 
         const code: Code = await createCode(user_id, file_name, reviewers);
         const post = await createObject('code', code._id);
 
         // TODO: change localhost to minio-url
         if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
+        const res2 = createPost(user_id, user_name, '', false, code._id, file_name, reviewers);
 
-        console.log(post);
+        // console.log(post);
         res.status(200).json(post);
       } catch (err) {
         res.status(404).json({ message: 'unauthorized' }); // TODO:

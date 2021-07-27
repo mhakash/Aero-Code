@@ -29,6 +29,7 @@ export type ChatRoom = {
   _id: string;
   messages?: string[];
 };
+
 export type Post = {
   _id: string;
   user_id: string;
@@ -39,7 +40,9 @@ export type Post = {
   is_reply: boolean;
   replies?: string[];
   codes?: { filename: string ,code_id: string};
+  group_name?: string,
 };
+
 export type Group = {
   _id: string;
   name: string;

@@ -1,6 +1,6 @@
 import { dbConnect } from '../utils/dbConnect';
 import { ObjectID, ObjectId, UpdateWriteOpResult } from 'mongodb';
-import { User, Post, Code } from 'types';
+import { User, Post, Code, Group } from 'types';
 
 export const createPost = async (
   user_id: string,
@@ -9,6 +9,7 @@ export const createPost = async (
   is_reply: boolean = false,
   code_id: string = '',
   code_name: string = '',
+  reviwers: string[] = [],
 ): Promise<Post> => {
   const temp = {
     user_id: user_id,
@@ -19,6 +20,7 @@ export const createPost = async (
     is_reply: is_reply,
     replies: [],
     codes: { filename: code_name, code_id: code_id },
+    group_name: '',
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
@@ -35,6 +37,13 @@ export const createPost = async (
       { _id: user_id },
       { $push: { posts: res.insertedId } },
     );
+
+    for (let i = 0; i < reviwers.length; i++) {
+      await userCollection.updateOne(
+        { _id: reviwers[i] },
+        { $push: { posts: res.insertedId } },
+      );
+    }
 
     return post;
   } catch (err) {
@@ -63,25 +72,32 @@ export const createGroupPost = async (
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
-    const res = await postCollection.insertOne(temp);
 
     const groupCollection = (await dbConnect()).db.collection('groups');
+    const group: Group = await groupCollection.findOne({ _id: new ObjectID(grid) });
+
+    const post = {
+      ...temp,
+      group_name: group.name,
+    };
+    const res = await postCollection.insertOne(post);
     const res2 = await groupCollection.updateOne(
       { _id: new ObjectId(grid) },
       { $push: { posts_id: res.insertedId } },
     );
-    //console.log("grp.update"+res2);
-    /*const post: Post = {
-      ...temp,
-      _id: res.insertedId,
-    };
 
+    let memberids: string[] = group.members?.map((x) => x._id) ?? [];
+    memberids = memberids.filter((item) => item != user_id);
+    
     const userCollection = (await dbConnect()).db.collection('users');
-
-    await userCollection.updateOne(
-      { _id: user_id },
-      { $push: { posts: res.insertedId } },
-    );*/
+    for (let i = 0; i < memberids.length; i++)
+    {
+      await userCollection.updateOne(
+        { _id: memberids[i] },
+        { $push: { posts: res.insertedId } },
+      );
+    }
+    
     return res2;
   } catch (err) {
     throw new Error('Could not create post\n' + err?.message);
