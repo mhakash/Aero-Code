@@ -26,14 +26,16 @@ const Home: FC = () => {
       }
     >
       {data?.data && (
-        <Code
-          code={
-            typeof data.data === 'object'
-              ? JSON.stringify(data.data, null, 2)
-              : data?.data
-          }
-          ext={data.ext}
-        />
+        <div className=" bg-gray-400">
+          <Code
+            code={
+              typeof data.data === 'object'
+                ? JSON.stringify(data.data, null, 2)
+                : data?.data
+            }
+            ext={data.ext}
+          />
+        </div>
       )}
     </Layout>
   );

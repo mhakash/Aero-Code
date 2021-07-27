@@ -34,28 +34,26 @@ const Code: React.FC<{ code: string; ext?: string }> = ({ ext, code = 'txt' }) =
   }, [setCodeInputModalVisibility, lineToHighLight.length]);
 
   return (
-    <div className="flex">
-      <div className=" max-w-screen-md">
-        <SyntaxHighlighter
-          style={theme}
-          language={ext}
-          showLineNumbers={true}
-          useInlineStyles={true}
-          lineNumberStyle={(line: number) => {
-            let style: any = { cursor: 'pointer' };
-            if (lineToHighLight.indexOf(line) !== -1) {
-              style.backgroundColor = 'blue';
-            }
+    <div className="">
+      <SyntaxHighlighter
+        style={theme}
+        language={ext}
+        showLineNumbers={true}
+        useInlineStyles={true}
+        lineNumberStyle={(line: number) => {
+          let style: any = { cursor: 'pointer' };
+          if (lineToHighLight.indexOf(line) !== -1) {
+            style.backgroundColor = 'blue';
+          }
 
-            return style;
-          }}
-        >
-          {code}
-        </SyntaxHighlighter>
-      </div>
+          return style;
+        }}
+      >
+        {code}
+      </SyntaxHighlighter>
 
       <CodeInputModal>
-        <div className="">
+        <div className="" style={{ width: '600px' }}>
           <InputBox />
         </div>
       </CodeInputModal>
