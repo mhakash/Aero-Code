@@ -1,7 +1,7 @@
 import Layout from 'components/Layout';
 import { addFriend, searchFriend } from 'lib/api';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import React, { FC, useState } from 'react';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
@@ -27,6 +27,7 @@ const Home: FC = () => {
 
   const handleAddFriend = async (id: string, name: string) => {
     await addFriend(id, name);
+    router.push('/friend')
     return null;
   };
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Code, User, Message, Post } from 'types';
+import { Code, User,Group, Message, Post } from 'types';
 import firebase from '../utils/firebaseClient';
 
 const BASE_URL = '/api';
@@ -120,13 +120,18 @@ export const createNewGroup = async (groupname: string, members: {_id: string, n
   return data;
 };
 
-export const getGroupDiscussions = async (grid: string): Promise<Post[]> => {
+export const getGroupDiscussions = async (grid: string): Promise<{posts: Post[], group: Group, friends: {_id: string, name: string}[]}> => {
   let discussions = await await get(`/group/${grid}`);
 
-  return discussions as Post[];
+  return discussions as {posts: Post[], group: Group, friends: {_id: string, name: string}[]};
 };
 export const addGroupDiscussion = async (filename: string,txt: string, grid: string): Promise<any> => {
   const data = await post(`/group/${grid}/add`, {filename, txt, grid});
-
+  
   return data;
 }
+export const addGroupMember = async (id: string, name: string, grid: string): Promise<{posts: Post[], group: Group, friends: {_id: string, name: string}[]}> => {
+  const data = await await post(`/group/${grid}`, { id, name});
+  
+  return data as {posts: Post[], group: Group, friends: {_id: string, name: string}[]};
+};

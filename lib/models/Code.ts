@@ -54,7 +54,7 @@ export const createGroupCode = async (
     let memberids : string[] = group.members?.map(x=>x._id)??[];
     memberids = memberids.filter(item => item != user_id);
     
-    console.log("group member sonkha :"+ String(memberids.length));
+    //console.log("group member sonkha :"+ String(memberids.length));
     if(memberids.length>0){
       await codeCollection.updateOne(
         {_id: new ObjectId(res.insertedId)},

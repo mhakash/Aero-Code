@@ -57,12 +57,13 @@ const Home: FC = () =>  {
         if (upload.ok) {
           console.log('Uploaded successfully!');
           alert.show('upload successful', { type: 'success' });
-          //router.push('/', '/');
         } else {
           console.error('Upload failed.');
           alert.show('upload failed', { type: 'error' });
         }
       }
+      router.push(`/group/${grid}`);
+      
   };
 
   const onSubmit = async (data: { body: string }) => {

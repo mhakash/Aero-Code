@@ -19,6 +19,7 @@ const CreateGroupPage: React.FC = () => {
 
   const CreateGroup = async () => {
     const data = await createNewGroup(groupname, reviewers);
+    router.push('/group');
   };
 
 

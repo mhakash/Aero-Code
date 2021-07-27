@@ -23,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         let code_id:string ="";
         let code_name: string = "";
         if(filename!==""){
-          console.log("code paisi aijka");
+          //console.log("code paisi aijka");
           const code: Code = await createGroupCode(user_id, filename, grid);
           code_id = code._id;
           code_name = code.name;

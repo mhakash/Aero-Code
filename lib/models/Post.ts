@@ -52,21 +52,20 @@ export const createGroupPost = async (
     upvotes: 0,
     downvotes: 0,
     replies: [],
-  
+    codes: {filename: code_name ,code_id: code_id}
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
     const res = await postCollection.insertOne(temp);
     //console.log("In post.ts: <id:name>: ==>"+code_id+code_name);
-    if(code_id!==""){
+    /*if(code_id!==""){
       //console.log("before post update");
       const r = await postCollection.updateOne(
         { _id: res.insertedId },
         {$set: { codes: {filename: code_name ,code_id: code_id} }},
-        {upsert: true},
         );
       //console.log("post.update"+r);
-    }
+    }*/
 
     const groupCollection =(await dbConnect()).db.collection('groups');
     const res2 = await groupCollection.updateOne(
