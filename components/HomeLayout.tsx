@@ -135,7 +135,7 @@ const HomeLayout: React.FC<{
             </div>
 
             {side && (
-              <div className="min-h-full relative ml-2 p-1 w-96">
+              <div className="min-h-full relative ml-2 p-1 pl-2 w-96 border-l border-gray-300">
                 <div className="sticky max-h-full overflow-y-scroll">{side}</div>
               </div>
             )}

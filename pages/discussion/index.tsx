@@ -38,7 +38,7 @@ const Home: FC = () => {
                 }
               >
                 <a>
-                  <Discussion post={e} />
+                  <Discussion post={e} hasLink={true} />
                 </a>
               </Link>
             </div>

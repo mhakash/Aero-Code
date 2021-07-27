@@ -36,10 +36,15 @@ export const getUser = async (): Promise<User> => {
 };
 
 export const getMessageFriends = async (): Promise<
-  { _id: string; friend_name: string; recentmsg: Message , friend_avatar: string}[]
+  { _id: string; friend_name: string; recentmsg: Message; friend_avatar: string }[]
 > => {
   const data = await get('/message');
-  return data as { _id: string; friend_name: string; recentmsg: Message,friend_avatar: string }[];
+  return data as {
+    _id: string;
+    friend_name: string;
+    recentmsg: Message;
+    friend_avatar: string;
+  }[];
 };
 
 export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
@@ -51,9 +56,14 @@ export const getCodes = async (): Promise<{ _id: string; name: string }[]> => {
 
 type CodeData = { data: string | Object; ext?: string; name: string };
 
-export const getCodeById = async (id: string): Promise<CodeData> => {
+export const getCodeDataById = async (id: string): Promise<CodeData> => {
   const code = (await get(`/code/${id}`)) as CodeData;
   // console.log(code);
+  return code;
+};
+
+export const getPostByCodeId = async (id: string): Promise<Post> => {
+  const code = (await get(`/code/${id}/data`)) as Post;
   return code;
 };
 
@@ -161,4 +171,14 @@ export const addGroupMember = async (
 
 export const addReply = async (parent_id: string, body: string): Promise<void> => {
   await post(`/discussion/${parent_id}/add`, { body });
+};
+
+export const addReview = async (
+  codeId: string,
+  type: string,
+  severity: string,
+  details: string,
+  line: number,
+): Promise<void> => {
+  const data = await post(`/code/${codeId}`, { type, severity, details, line });
 };

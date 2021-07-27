@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
 
-const Discussion: FC<{ post: Post }> = ({ post }) => {
+const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
 
@@ -27,7 +27,9 @@ const Discussion: FC<{ post: Post }> = ({ post }) => {
   };
 
   const handleReply = async () => {
-    setShowReply(!showReply);
+    if (!hasLink) {
+      setShowReply(!showReply);
+    }
   };
 
   const onSubmit = async (data: { body: string }) => {
