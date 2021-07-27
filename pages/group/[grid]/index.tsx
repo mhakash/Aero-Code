@@ -34,21 +34,9 @@ const Home: FC = () => {
           </div>
         </>
       }
-    >
-      {(data?.posts ?? []).map((e) => {
-        if (e)
-          return (
-            <div key={e._id} className="ml-5">
-              <Link href={`/discussion/${e._id}`}>
-                <a>
-                  <Discussion post={e} />
-                </a>
-              </Link>
-            </div>
-          );
-      })}
-
-      <h1>Group Members</h1>
+      side = {
+        <>
+                <h1>Group Members</h1>
       {data?.group?.members?.map((e) => (
         <div key={e._id} className="my-2">
           <div className="flex cursor-pointer">
@@ -69,7 +57,24 @@ const Home: FC = () => {
             </button>
           </div>
         </div>
-      ))}
+      ))}        
+        </>
+      }
+    >
+      {(data?.posts ?? []).map((e) => {
+        if (e)
+          return (
+            <div key={e._id} className="ml-5">
+              <Link href={`/discussion/${e._id}`}>
+                <a>
+                  <Discussion post={e} />
+                </a>
+              </Link>
+            </div>
+          );
+      })}
+
+
     </Layout>
   );
 };

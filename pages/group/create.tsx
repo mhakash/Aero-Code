@@ -23,27 +23,8 @@ const CreateGroupPage: React.FC = () => {
   };
 
   return (
-    <Layout header={<>Add New Group</>}>
-      <div className="min-h-full flex flex-row">
-        <div className="flex flex-col justify-center m-auto">
-          <label htmlFor="file-upload" className="flex mb-4">
-            <input
-              type="text"
-              value={groupname}
-              onChange={(e) => setGroupName(e.target.value)}
-              className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
-            />
-          </label>
-
-          <button
-            className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
-            onClick={CreateGroup}
-          >
-            Create Group
-          </button>
-        </div>
-
-        <div className="m-2">
+    <Layout header={<>Add New Group</>} side={<>
+      <div className="m-2">
           <div className="my-4">Add Members</div>
           {auth.user?.friends?.map((e) => (
             <div key={e._id} className="my-2">
@@ -65,6 +46,27 @@ const CreateGroupPage: React.FC = () => {
             </div>
           ))}
         </div>
+    </>}>
+      <div className="min-h-full flex flex-row">
+        <div className="flex flex-col justify-center m-auto">
+          <label htmlFor="file-upload" className="flex mb-4">
+            <input
+              type="text"
+              value={groupname}
+              onChange={(e) => setGroupName(e.target.value)}
+              className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
+            />
+          </label>
+
+          <button
+            className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
+            onClick={CreateGroup}
+          >
+            Create Group
+          </button>
+        </div>
+
+        
       </div>
     </Layout>
   );

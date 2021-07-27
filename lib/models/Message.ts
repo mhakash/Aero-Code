@@ -1,6 +1,6 @@
 import { dbConnect } from '../utils/dbConnect';
-import { Message } from 'types';
-import { UpdateWriteOpResult } from 'mongodb';
+import { Message, User } from 'types';
+import { ObjectID, UpdateWriteOpResult } from 'mongodb';
 import { ObjectId } from 'mongodb';
 
 export const addMessage = async (
@@ -33,7 +33,8 @@ export const addMessage = async (
 
 export const getMessageByChatRoomId = async (
   chat_room_id: string,
-): Promise<Message[]> => {
+  user_id: string,
+): Promise<{msgs:Message[], chat: { _id: string; friend_id: string; friend_name: string; friend_avatar: string }}> => {
   try {
     const chatRoomCollection = (await dbConnect()).db.collection('ChatRoom');
     const chatRoom = await chatRoomCollection.findOne({
@@ -49,7 +50,15 @@ export const getMessageByChatRoomId = async (
       result.push(doc);
     }
 
-    return result;
+    const userCollection = (await dbConnect()).db.collection('users');
+    const user: User = await userCollection.findOne({
+     _id: user_id,
+    });
+    const chatrooms:{ _id: string; friend_id: string; friend_name: string; friend_avatar: string } [] = user?.chatRooms??[];
+    const chat_detail = chatrooms.find(e => e._id.equals(chat_room_id));
+
+    const ret = { msgs: result, chat: chat_detail as { _id: string; friend_id: string; friend_name: string; friend_avatar: string } };
+    return ret;
   } catch (err) {
     throw new Error('cannot get');
   }

@@ -89,10 +89,11 @@ export const addMessage = async (chid: string, msg: string): Promise<void> => {
   const data = await post(`/message/${chid}`, { msg });
 };
 
-export const getMessages = async (chid: string): Promise<Message[]> => {
+export const getMessages = async (chid: string): Promise<{msgs: Message[]; chat: { _id: string; friend_id: string; friend_name: string; friend_avatar: string }}> => {
   const data = await get(`/message/${chid}`);
+  console.log(data);
 
-  return data as Message[];
+  return data as {msgs: Message[]; chat: { _id: string; friend_id: string; friend_name: string; friend_avatar: string }};
 };
 
 export const getDiscussions = async (): Promise<Post[]> => {
