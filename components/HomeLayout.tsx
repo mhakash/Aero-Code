@@ -128,15 +128,15 @@ const HomeLayout: React.FC<{
 
         <div className="px-4 flex-1 bg-gray-50 max-h-full overflow-hidden flex flex-col">
           <div className="flex min-h-full">
-            <div className="flex-1 min-h-full overflow-y-scroll justify-end flex flex-col relative">
-              <div className="max-h-full min-h-full flex flex-col justify-end overflow-y-scroll">
+            <div className="flex-1 min-h-full overflow-y-scroll no-scrollbar justify-end flex flex-col relative">
+              <div className="max-h-full min-h-full flex flex-col justify-end overflow-y-scroll no-scrollbar">
                 {children}
               </div>
             </div>
 
             {side && (
               <div className="min-h-full relative ml-2 p-1 pl-2 w-96 border-l border-gray-300">
-                <div className="sticky max-h-full overflow-y-scroll">{side}</div>
+                <div className="sticky max-h-full overflow-y-scroll no-scrollbar">{side}</div>
               </div>
             )}
           </div>

@@ -98,7 +98,7 @@ const Home: FC = () => {
       }
     >
       {data?.data ? (
-        <div className=" min-h-full">
+        <div className="min-h-full">
           <Code
             setSelectedLine={setLineSelected}
             code={
