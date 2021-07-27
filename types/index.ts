@@ -36,6 +36,7 @@ export type Post = {
   body: string;
   upvotes: number;
   downvotes: number;
+  is_reply: boolean;
   replies?: string[];
   codes?: { filename: string ,code_id: string};
 };

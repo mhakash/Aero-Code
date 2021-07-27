@@ -6,6 +6,7 @@ export const createPost = async (
   user_id: string,
   user_name: string,
   body: string,
+  is_reply: boolean = false
 ): Promise<Post> => {
   const temp = {
     user_id: user_id,
@@ -13,6 +14,7 @@ export const createPost = async (
     body: body,
     upvotes: 0,
     downvotes: 0,
+    is_reply: is_reply,
     replies: [],
   };
   try {
@@ -44,6 +46,7 @@ export const createGroupPost = async (
   code_id: string,
   code_name: string,
   grid: string,
+  is_reply: boolean = false
 ): Promise<UpdateWriteOpResult> => {
   const temp = {
     user_id: user_id,
@@ -51,27 +54,27 @@ export const createGroupPost = async (
     body: body,
     upvotes: 0,
     downvotes: 0,
+    is_reply: is_reply,
     replies: [],
-  
   };
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
     const res = await postCollection.insertOne(temp);
     //console.log("In post.ts: <id:name>: ==>"+code_id+code_name);
-    if(code_id!==""){
+    if (code_id !== '') {
       //console.log("before post update");
       const r = await postCollection.updateOne(
         { _id: res.insertedId },
-        {$set: { codes: {filename: code_name ,code_id: code_id} }},
-        {upsert: true},
-        );
+        { $set: { codes: { filename: code_name, code_id: code_id } } },
+        { upsert: true },
+      );
       //console.log("post.update"+r);
     }
 
-    const groupCollection =(await dbConnect()).db.collection('groups');
+    const groupCollection = (await dbConnect()).db.collection('groups');
     const res2 = await groupCollection.updateOne(
-      {_id: new ObjectId(grid)},
-      {$push: {posts_id: res.insertedId} },
+      { _id: new ObjectId(grid) },
+      { $push: { posts_id: res.insertedId } },
     );
     //console.log("grp.update"+res2);
     /*const post: Post = {
@@ -109,7 +112,7 @@ export const createReply = async (
   body: string,
 ): Promise<Post | null> => {
   try {
-    const newPost: Post = await createPost(user_id, user_name, body);
+    const newPost: Post = await createPost(user_id, user_name, body, true);
     const postCollection = (await dbConnect()).db.collection('posts');
 
     postCollection.updateOne(
@@ -122,7 +125,7 @@ export const createReply = async (
   }
 };
 
-export const addVote = async (id: string, type: string, add:boolean): Promise<void> => {
+export const addVote = async (id: string, type: string, add: boolean): Promise<void> => {
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
     const value = add ? 1 : -1;
