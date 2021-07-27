@@ -85,7 +85,9 @@ export const getMessages = async (chid: string): Promise<Message[]> => {
   return data as Message[];
 };
 
-export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
+export const getDiscussions = async (): Promise<Post[]> => {
+  const user = await getUser();
+  const post_ids = user.posts ?? []
   let discussions: Post[] = [];
 
   for (let index = 0; index < post_ids.length; index++) {
@@ -97,6 +99,7 @@ export const getDiscussions = async (post_ids: string[]): Promise<Post[]> => {
   return discussions;
 };
 
+
 export const getDiscussionByID = async (pid: string): Promise<Post> => {
   const data = await get(`/discussion/${pid}`);
   // if (typeof code === 'object' && code !== null) {
@@ -107,14 +110,17 @@ export const getDiscussionByID = async (pid: string): Promise<Post> => {
 };
 
 export const addDiscussion = async (body: string): Promise<void> => {
-  const data = await post(`/discussion`, {body});
-}
+  const data = await post(`/discussion`, { body });
+};
 
 export const addVote = async (id: string, type: string, add: boolean): Promise<void> => {
-  await post(`/discussion/${id}`, {type: type, add: add});
-}
+  await post(`/discussion/${id}`, { type: type, add: add });
+};
 
-export const createNewGroup = async (groupname: string, members: {_id: string, name: string, role: number}[]): Promise<any> => {
+export const createNewGroup = async (
+  groupname: string,
+  members: { _id: string; name: string; role: number }[],
+): Promise<any> => {
   const data = await post(`/group/create`, { groupname, members });
   // console.log('data', data);
   return data;

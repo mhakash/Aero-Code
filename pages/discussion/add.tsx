@@ -8,6 +8,7 @@ import { useAuth } from '../../lib/hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { User } from 'types';
 import Image from 'next/image';
+import { mutate } from 'swr';
 
 const Home: FC = () => {
   const auth = useAuth();
@@ -20,6 +21,7 @@ const Home: FC = () => {
 
   const onSubmit = async (data: { body: string }) => {
     await addDiscussion(data.body);
+    mutate(`/discussion`);
     router.push('/discussion', '/discussion');
   };
 

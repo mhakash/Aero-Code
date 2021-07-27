@@ -12,8 +12,7 @@ const Home: FC = () => {
   const auth = useAuth();
   const { data } = useSWR(
     () => (auth.user ? `/discussion` : null),
-    () => getDiscussions(auth.user?.posts ?? []),
-    { refreshInterval: 1000 },
+    () => getDiscussions()
   );
 
   return (
@@ -30,7 +29,7 @@ const Home: FC = () => {
       }
     >
       {(data ?? []).map((e) => {
-        if (e)
+        if (e && !e.is_reply)
           return (
             <div key={e._id} className="ml-5">
               <Link href={`/discussion/${e._id}`}>
