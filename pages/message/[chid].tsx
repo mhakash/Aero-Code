@@ -78,19 +78,19 @@ const Message: FC = () => {
     <Layout
     header={
       <>
-        <div className="px-4 flex flex-row">
+        <div className="px-4 flex flex-row items-center">
             <div>
               {data?.chat.friend_avatar && (
                 <Image
                   className="rounded-full mr-5"
                   src={data.chat.friend_avatar}
                   alt="avatar"
-                  width={55}
-                  height={55}
+                  width={40}
+                  height={40}
                 />
               )}
             </div>
-            <div className="flex flex-col"><div className="font-bold px-3 pt-3 ">{data?.chat.friend_name}{' '}</div>
+            <div className="flex flex-col"><div className="font-bold px-3 ">{data?.chat.friend_name}{' '}</div>
             </div>
           </div>
       </>
@@ -100,7 +100,7 @@ const Message: FC = () => {
         {messages.map((e) => (
           <div
             key={e.key}
-            className={`p-4 rounded-3xl m-2 max-w-2xl ${
+            className={`px-6 py-3 rounded-3xl m-2 max-w-2xl ${
               e.user === 'me'
                 ? 'text-right self-end bg-blue-200'
                 : 'text-left self-start bg-blue-800 text-gray-100'
