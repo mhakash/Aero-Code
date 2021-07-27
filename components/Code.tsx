@@ -59,6 +59,7 @@ const Code: React.FC<CodeProps> = ({ ext, code = 'txt', setSelectedLine }) => {
 
           return style;
         }}
+        className="no-scrollbar"
       >
         {code}
       </SyntaxHighlighter>
