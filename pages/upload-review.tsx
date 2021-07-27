@@ -70,65 +70,62 @@ const UploadReviewPage: React.FC = () => {
   };
 
   return (
-    <Layout header={<>Add New Review Request</>}>
-      <div className="min-h-full flex max-w-full flex-shrink">
-        <div className="flex flex-col  m-auto divide-x-2">
-          {file && (
-            <div className="">
-              <Code code={text} ext={file?.name.split('.').pop()} />{' '}
-            </div>
-          )}
-          {!file && <FilePicker file={file} setFile={setFile} />}
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-          type="text"
-          autoComplete="off"
-          placeholder="Add Reviewer"
-          {...register('friend')}
-          className="text-gray-700 bg-gray-200 py-2 px-4 text-center rounded-lg text-sm mx-auto outline-none"
-          />
-        </form> */}
-        </div>
-        <div className="m-2 flex flex-col w-72 justify-start">
-          {file && (
-            <button
-              className="m-2  border border-gray-700 bg-gray-50 text-gray-700 py-2 px-4 rounded-lg text-sm"
-              onClick={() => setFile(null)}
-            >
-              cancel
-            </button>
-          )}
-          <div className="my-4">Add Reviewers</div>
+    <Layout
+      header={<>Add New Review Request</>}
+      side={
+        <>
+          <div className="m-2 flex flex-col justify-start">
+            {file && (
+              <>
+                <button
+                  className="my-2  border border-gray-700 bg-gray-50 text-gray-700 py-2 px-4 rounded-lg text-sm"
+                  onClick={() => setFile(null)}
+                >
+                  cancel
+                </button>
 
-          {auth.user?.friends?.map((e) => (
-            <div key={e._id} className="my-2">
-              <div
-                className="flex cursor-pointer"
-                onClick={() => {
-                  reviewers.find((x) => x === e._id)
-                    ? setReviewers(reviewers.filter((x) => x !== e._id))
-                    : setReviewers([...reviewers, e._id]);
-                }}
-              >
-                {reviewers.find((x) => x === e._id) ? (
-                  <MinusCircleIcon className="w-5 h-5 mr-2" />
-                ) : (
-                  <PlusCircleIcon className="w-5 h-5 mr-2" />
-                )}
-                <div className="font-semibold text-sm text-gray-700">{e.name}</div>
+                <button
+                  className="my-2 border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
+                  onClick={uploadFile}
+                >
+                  Submit Review Request
+                </button>
+              </>
+            )}
+
+            <div className="mt-4 mb-2 w-full border-b border-gray-400 pb-1">
+              Add Reviewers
+            </div>
+            {auth.user?.friends?.map((e) => (
+              <div key={e._id} className="my-2">
+                <div
+                  className="flex cursor-pointer items-center"
+                  onClick={() => {
+                    reviewers.find((x) => x === e._id)
+                      ? setReviewers(reviewers.filter((x) => x !== e._id))
+                      : setReviewers([...reviewers, e._id]);
+                  }}
+                >
+                  {reviewers.find((x) => x === e._id) ? (
+                    <MinusCircleIcon className="W-6 h-6 mr-2" />
+                  ) : (
+                    <PlusCircleIcon className="W-6 h-6 mr-2" />
+                  )}
+                  <div className=" text-gray-700">{e.name}</div>
+                </div>
               </div>
-            </div>
-          ))}
-
-          {file && (
-            <button
-              className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
-              onClick={uploadFile}
-            >
-              Submit Review Request
-            </button>
-          )}
-        </div>
+            ))}
+          </div>
+        </>
+      }
+    >
+      <div className="min-h-full">
+        {file && <Code code={text} ext={file?.name.split('.').pop()} />}
+        {!file && (
+          <div className="m-10">
+            <FilePicker file={file} setFile={setFile} />
+          </div>
+        )}
       </div>
     </Layout>
   );

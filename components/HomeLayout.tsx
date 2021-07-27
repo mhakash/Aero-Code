@@ -9,12 +9,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const HomeLayout: React.FC<{
   header?: JSX.Element;
-}> = ({ children, header }) => {
+  side?: JSX.Element;
+}> = ({ children, header, side }) => {
   const auth = useAuth();
   const { navOpen, setNavOpen } = auth;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen max-w-full">
       <motion.div
         initial={{ width: '16rem' }}
         animate={{ width: navOpen ? '16rem' : '2.5rem' }}
@@ -117,18 +118,32 @@ const HomeLayout: React.FC<{
         )}
       </motion.div>
 
-      <div className="flex flex-col flex-1 max-h-screen">
+      <div
+        className="flex flex-col flex-1 max-h-screen"
+        style={{ maxWidth: `calc(100% - ${navOpen ? '16rem' : '2.5rem'})` }}
+      >
         <div className=" bg-gray-200 w-full p-4 flex justify-between">
           {header && header}
         </div>
 
-        <div className="px-4 flex-1 bg-gray-50 overflow-y-scroll flex flex-col">
-          <div className="flex-1"></div>
-          <>{children}</>
+        <div className="px-4 flex-1 bg-gray-50 max-h-full overflow-hidden flex flex-col">
+          <div className="flex min-h-full">
+            <div className="flex-1 min-h-full overflow-y-scroll justify-end flex flex-col relative">
+              <div className="max-h-full min-h-full flex flex-col justify-end overflow-y-scroll">
+                {children}
+              </div>
+            </div>
+
+            {side && (
+              <div className="min-h-full relative ml-2 p-1 pl-2 w-96 border-l border-gray-300">
+                <div className="sticky max-h-full overflow-y-scroll">{side}</div>
+              </div>
+            )}
+          </div>
         </div>
 
         <footer className="text-center bg-gray-200">
-          <div className="py-4 text-gray-700">AeroCode 2021</div>
+          <div className="py-4 ">AeroCode 2021</div>
         </footer>
       </div>
     </div>

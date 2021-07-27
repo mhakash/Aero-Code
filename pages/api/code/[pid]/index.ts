@@ -24,6 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       const review_content: ReviewContent = {
         type: req.body.type,
         severity: req.body.severity,
+        line: req.body.line,
       };
       const res2 = await createReply(
         user_id,

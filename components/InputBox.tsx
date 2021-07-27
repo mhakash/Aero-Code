@@ -3,16 +3,12 @@ import { useForm } from 'react-hook-form';
 import sendImage from '../public/images/send-button.svg';
 import Image from 'next/image';
 
-const problemOptions = ['bug', 'memory leak', 'unsafe'];
-const severityOptions = ['low', 'high'];
+export const problemOptions = ['bug', 'memory leak', 'unsafe'];
+export const severityOptions = ['low', 'high'];
 const colorOptions = ['red', 'green', 'blue'];
 
-const InputBox = () => {
+const InputBox: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {
   const { register, handleSubmit } = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
 
   return (
     <div className="my-4 border-gray-700 border-2 rounded-xl overflow-hidden">
@@ -33,7 +29,7 @@ const InputBox = () => {
             </select>
           </div>
 
-          <div className="border-gray-700 border-r-2 flex-1  flex justify-center">
+          <div className="border-gray-700  flex-1  flex justify-center">
             <label htmlFor="type">Severity: </label>
             <select
               {...register('severity')}

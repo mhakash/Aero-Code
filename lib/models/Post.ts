@@ -124,7 +124,16 @@ export const createReply = async (
   review_content: ReviewContent = {},
 ): Promise<Post | null> => {
   try {
-    const newPost: Post = await createPost(user_id, user_name, body, true, '', '', [], review_content);
+    const newPost: Post = await createPost(
+      user_id,
+      user_name,
+      body,
+      true,
+      '',
+      '',
+      [],
+      review_content,
+    );
     const postCollection = (await dbConnect()).db.collection('posts');
 
     postCollection.updateOne(
@@ -154,7 +163,9 @@ export const addVote = async (id: string, type: string, add: boolean): Promise<v
 export const getPostIdByCodeId = async (id: string): Promise<string> => {
   try {
     const postCollection = (await dbConnect()).db.collection('posts');
-    const post: Post = await postCollection.findOne({ 'codes.code_id': id });
+    const post: Post = await postCollection.findOne({
+      'codes.code_id': new ObjectID(id),
+    });
     return post._id;
   } catch (err) {
     throw new Error('cannot find post id');

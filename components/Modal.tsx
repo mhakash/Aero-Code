@@ -33,17 +33,10 @@ const Modal: React.FC<{ visible: boolean; setVisible: any }> = ({
     >
       <div className="flex justify-center">
         <div
-          className=" m-1 rounded-xl relative max-w-full max-h-full overflow-hidden shadow-lg"
+          className=" m-1 rounded-xl relative max-w-full max-h-full overflow-hidden shadow-xl"
           onClick={(e) => e.stopPropagation()}
         >
           <div>{children}</div>
-
-          {/* <button
-            onClick={() => setVisible(false)}
-            className="text-gray-600 hover:text-gray-800 absolute top-0 right-0 rounded-full pt-0.5 pr-0.5"
-          >
-            <XIcon className="w-5 h-5 text-gray-600 hover:text-gray-800" />
-          </button> */}
         </div>
       </div>
     </div>
