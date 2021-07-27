@@ -9,7 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const HomeLayout: React.FC<{
   header?: JSX.Element;
-}> = ({ children, header }) => {
+  side?: JSX.Element;
+}> = ({ children, header, side }) => {
   const auth = useAuth();
   const { navOpen, setNavOpen } = auth;
 
@@ -96,8 +97,6 @@ const HomeLayout: React.FC<{
                 </Link>
               </div>
             </div>
-            
-            
             <div className="mb-12">
               <div className="flex items-center">
                 <div className="">
@@ -124,13 +123,21 @@ const HomeLayout: React.FC<{
           {header && header}
         </div>
 
-        <div className="px-4 flex-1 bg-gray-50 overflow-y-scroll flex flex-col">
-          <div className="flex-1"></div>
-          <>{children}</>
+        <div className="px-4 flex-1 bg-gray-50 max-h-full overflow-y-scroll flex flex-col">
+          <div className="flex min-h-full">
+            <div className="flex-1 overflow-y-scroll justify-end flex flex-col">
+              {children}
+            </div>
+            {side && (
+              <div className="min-h-full relative ml-2 p-1 w-96">
+                <div className="sticky max-h-full overflow-y-scroll">{side}</div>
+              </div>
+            )}
+          </div>
         </div>
 
         <footer className="text-center bg-gray-200">
-          <div className="py-4 text-gray-700">AeroCode 2021</div>
+          <div className="py-4 ">AeroCode 2021</div>
         </footer>
       </div>
     </div>

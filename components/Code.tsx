@@ -55,7 +55,7 @@ const Code: React.FC<{ code: string; ext?: string }> = ({ ext, code = 'txt' }) =
       </div>
 
       <CodeInputModal>
-        <div className="" style={{ width: '600px' }}>
+        <div className="">
           <InputBox />
         </div>
       </CodeInputModal>

@@ -6,11 +6,14 @@ import HomeLayout from './HomeLayout';
 
 const Layout: React.FC<{
   header?: JSX.Element;
-}> = ({ children, header }) => {
+  side?: JSX.Element;
+}> = ({ children, header, side }) => {
   const auth = useAuth();
 
   return auth.user ? (
-    <HomeLayout header={header}>{children}</HomeLayout>
+    <HomeLayout header={header} side={side}>
+      {children}
+    </HomeLayout>
   ) : (
     <div>
       <div>
