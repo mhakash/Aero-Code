@@ -12,7 +12,7 @@ const Home: FC = () => {
   const auth = useAuth();
   const { data } = useSWR(
     () => (auth.user ? `/discussion` : null),
-    () => getDiscussions()
+    () => getDiscussions(),
   );
 
   return (
@@ -32,7 +32,11 @@ const Home: FC = () => {
         if (e && !e.is_reply)
           return (
             <div key={e._id} className="ml-5">
-              <Link href={`/discussion/${e._id}`}>
+              <Link
+                href={
+                  e.codes?.code_id ? `/code/${e.codes?.code_id}` : `/discussion/${e._id}`
+                }
+              >
                 <a>
                   <Discussion post={e} />
                 </a>

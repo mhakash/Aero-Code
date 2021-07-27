@@ -13,19 +13,18 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     if (req.method === 'POST') {
       try {
         const groupname = req.body.groupname;
-        const members: {_id: string, name: string, role: number}[] = req.body.members ?? [];
+        const members: { _id: string; name: string; role: number }[] =
+          req.body.members ?? [];
 
         console.log(groupname, members);
-        
+
         const res2 = await createNewGroup(user_id, user_name, groupname, members);
         res.status(200).json(res2);
-        
       } catch (err) {
         res.status(404).json({ message: 'unauthorized' }); // TODO:
       }
     } else if (req.method === 'GET') {
       // TODO
-
     }
   } else {
     res.status(403).json({ message: 'unauthorized' });

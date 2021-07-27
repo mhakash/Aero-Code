@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   if (token) {
     try {
       const t = await decodeToken(token as string);
-      const user_id = t.uid; 
+      const user_id = t.uid;
       const friend_id = req.body.id;
       const friend_name = req.body.name;
       const res2 = await addFriend(user_id, friend_id, friend_name);

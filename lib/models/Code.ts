@@ -49,15 +49,15 @@ export const createGroupCode = async (
 
     //update reviews of res & add post to group
     const groupCollection = (await dbConnect()).db.collection('groups');
-    const group: Group = await groupCollection.findOne({_id: new ObjectId(grid)});
+    const group: Group = await groupCollection.findOne({ _id: new ObjectId(grid) });
 
-    let memberids : string[] = group.members?.map(x=>x._id)??[];
-    memberids = memberids.filter(item => item != user_id);
-    
+    let memberids: string[] = group.members?.map((x) => x._id) ?? [];
+    memberids = memberids.filter((item) => item != user_id);
+
     //console.log("group member sonkha :"+ String(memberids.length));
-    if(memberids.length>0){
+    if (memberids.length > 0) {
       await codeCollection.updateOne(
-        {_id: new ObjectId(res.insertedId)},
+        { _id: new ObjectId(res.insertedId) },
         { $push: { reviewers: memberids } },
       );
     }
@@ -66,7 +66,6 @@ export const createGroupCode = async (
       _id: res.insertedId,
     };
 
-    
     return code;
   } catch (err) {
     throw new Error('Could not create code\n' + err?.message);

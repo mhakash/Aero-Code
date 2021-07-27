@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Code, User,Group, Message, Post } from 'types';
+import { Code, User, Group, Message, Post } from 'types';
 import firebase from '../utils/firebaseClient';
 
 const BASE_URL = '/api';
@@ -87,7 +87,7 @@ export const getMessages = async (chid: string): Promise<Message[]> => {
 
 export const getDiscussions = async (): Promise<Post[]> => {
   const user = await getUser();
-  const post_ids = user.posts ?? []
+  const post_ids = user.posts ?? [];
   let discussions: Post[] = [];
 
   for (let index = 0; index < post_ids.length; index++) {
@@ -98,7 +98,6 @@ export const getDiscussions = async (): Promise<Post[]> => {
 
   return discussions;
 };
-
 
 export const getDiscussionByID = async (pid: string): Promise<Post> => {
   const data = await get(`/discussion/${pid}`);
@@ -126,20 +125,38 @@ export const createNewGroup = async (
   return data;
 };
 
-export const getGroupDiscussions = async (grid: string): Promise<{posts: Post[], group: Group, friends: {_id: string, name: string}[]}> => {
+export const getGroupDiscussions = async (
+  grid: string,
+): Promise<{ posts: Post[]; group: Group; friends: { _id: string; name: string }[] }> => {
   let discussions = await await get(`/group/${grid}`);
 
-  return discussions as {posts: Post[], group: Group, friends: {_id: string, name: string}[]};
+  return discussions as {
+    posts: Post[];
+    group: Group;
+    friends: { _id: string; name: string }[];
+  };
 };
-export const addGroupDiscussion = async (filename: string,txt: string, grid: string): Promise<any> => {
-  const data = await post(`/group/${grid}/add`, {filename, txt, grid});
-  
+export const addGroupDiscussion = async (
+  filename: string,
+  txt: string,
+  grid: string,
+): Promise<any> => {
+  const data = await post(`/group/${grid}/add`, { filename, txt, grid });
+
   return data;
-}
-export const addGroupMember = async (id: string, name: string, grid: string): Promise<{posts: Post[], group: Group, friends: {_id: string, name: string}[]}> => {
-  const data = await await post(`/group/${grid}`, { id, name});
-  
-  return data as {posts: Post[], group: Group, friends: {_id: string, name: string}[]};
+};
+export const addGroupMember = async (
+  id: string,
+  name: string,
+  grid: string,
+): Promise<{ posts: Post[]; group: Group; friends: { _id: string; name: string }[] }> => {
+  const data = await await post(`/group/${grid}`, { id, name });
+
+  return data as {
+    posts: Post[];
+    group: Group;
+    friends: { _id: string; name: string }[];
+  };
 };
 
 export const addReply = async (parent_id: string, body: string): Promise<void> => {

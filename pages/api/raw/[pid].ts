@@ -1,6 +1,6 @@
 import { decodeToken } from 'lib/utils/firebaseAdmin';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createPost, getObject } from '../../../lib/utils/objectStorage';
+import { createObject, getObject } from '../../../lib/utils/objectStorage';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     }
   } else if (req.method === 'POST') {
     // TODO: create a object id and store in database
-    const post = await createPost('code', 'nice');
+    const post = await createObject('code', 'nice');
     res.status(200).json(post);
   } else {
     res.status(405).send('method not allowed');

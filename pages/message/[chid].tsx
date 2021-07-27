@@ -99,12 +99,7 @@ const Message: FC = () => {
           className="py-2 px-4 m-2 rounded-3xl w-full max-w-3xl border-gray-500 border-2 outline-none"
         />
         <button type="submit" className="mt-2 ml-2">
-          <Image
-            src={'/images/send-button.svg'}
-            width={36}
-            height={36}
-            alt="upvote"
-          />
+          <Image src={'/images/send-button.svg'} width={36} height={36} alt="upvote" />
         </button>
       </form>
     </Layout>

@@ -3,7 +3,7 @@ import { addGroupDiscussion, uploadCode } from 'lib/api';
 import { useAlert } from 'react-alert';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { FC,ChangeEvent, useState } from 'react';
+import React, { FC, ChangeEvent, useState } from 'react';
 
 import useSWR from 'swr';
 import { useAuth } from '../../../lib/hooks/useAuth';
@@ -11,17 +11,16 @@ import { useForm } from 'react-hook-form';
 import { User } from 'types';
 import Image from 'next/image';
 
-const Home: FC = () =>  {
-
+const Home: FC = () => {
   const auth = useAuth();
   const { register, handleSubmit } = useForm();
   const router = useRouter();
   const { grid } = router.query;
-  console.log("group id: "+grid);
-  
+  console.log('group id: ' + grid);
+
   const [file, setFile] = useState<File>();
   const alert = useAlert();
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
@@ -34,36 +33,35 @@ const Home: FC = () =>  {
   //   () => getCodeById(pid as string),
   // );
   const uploadFile = async (postText: string) => {
-      console.log('uploading');
-      let filename = "";
-      if (file) {
-        filename = encodeURIComponent(file.name);
+    console.log('uploading');
+    let filename = '';
+    if (file) {
+      filename = encodeURIComponent(file.name);
+    }
+    const data = await addGroupDiscussion(filename, postText, grid as string);
+    if (file) {
+      const { url, fields } = data;
+
+      const formData = new FormData();
+
+      Object.entries({ ...fields, file }).forEach(([key, value]) => {
+        formData.append(key, value as Blob);
+      });
+
+      const upload = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (upload.ok) {
+        console.log('Uploaded successfully!');
+        alert.show('upload successful', { type: 'success' });
+      } else {
+        console.error('Upload failed.');
+        alert.show('upload failed', { type: 'error' });
       }
-      const data = await addGroupDiscussion(filename, postText, grid as string);
-      if (file) {
-        const { url, fields } = data;
-
-        const formData = new FormData();
-
-        Object.entries({ ...fields, file }).forEach(([key, value]) => {
-          formData.append(key, value as Blob);
-        });
-
-        const upload = await fetch(url, {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (upload.ok) {
-          console.log('Uploaded successfully!');
-          alert.show('upload successful', { type: 'success' });
-        } else {
-          console.error('Upload failed.');
-          alert.show('upload failed', { type: 'error' });
-        }
-      }
-      router.push(`/group/${grid}`);
-      
+    }
+    router.push(`/group/${grid}`);
   };
 
   const onSubmit = async (data: { body: string }) => {
@@ -73,21 +71,21 @@ const Home: FC = () =>  {
 
   return (
     <Layout
-    header={
-      <>
-        <div>Add Discussion</div>
-      </>
-    }>
+      header={
+        <>
+          <div>Add Discussion</div>
+        </>
+      }
+    >
+      <div className="my-2 h-full w-full max-w-3xl flex flex-col">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <textarea
+            autoComplete="off"
+            {...register('body')}
+            className="m-2 p-2 max-w-2xl w-full h-52 border-2 border-gray-400"
+          />
 
-    <div className="my-2 h-full w-full max-w-3xl flex flex-col">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea
-          autoComplete="off"
-          {...register('body')}
-          className="m-2 p-2 max-w-2xl w-full h-52 border-2 border-gray-400"
-        />
-
-        {file && <div className="text-center">{file.name}</div>}
+          {file && <div className="text-center">{file.name}</div>}
           <label htmlFor="file-upload" className="flex mb-4">
             <input
               id="file-upload"
@@ -101,15 +99,14 @@ const Home: FC = () =>  {
               Add Code
             </div>
           </label>
-          
-        <button type="submit" className="m-2 p-2 border-2 border-gray-400">
-          Post Discussion
-        </button>
-      </form>
-    </div>
-  </Layout> 
+
+          <button type="submit" className="m-2 p-2 border-2 border-gray-400">
+            Post Discussion
+          </button>
+        </form>
+      </div>
+    </Layout>
   );
-  
 };
 
 export default Home;

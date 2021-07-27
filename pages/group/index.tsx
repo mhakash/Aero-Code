@@ -26,12 +26,14 @@ const Home: FC = () => {
     >
       {data?.groups?.map((e) => (
         <Link href={`/group/${e._id}`} key={e._id}>
-        <div key={e._id} className="m-2 p-2 flex items-center bg-gray-700 text-gray-50 border-2 rounded-lg">
-          {/* <img src={e.avatar} className="w-10 h-10 rounded-full m-2" /> */}
-          <div className=" p-2 flex-1">{e.name}</div>          
-        </div>
+          <div
+            key={e._id}
+            className="m-2 p-2 flex items-center bg-gray-700 text-gray-50 border-2 rounded-lg"
+          >
+            {/* <img src={e.avatar} className="w-10 h-10 rounded-full m-2" /> */}
+            <div className=" p-2 flex-1">{e.name}</div>
+          </div>
         </Link>
-        
       ))}
     </Layout>
   );
