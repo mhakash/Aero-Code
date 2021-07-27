@@ -1,19 +1,28 @@
 import Layout from '../components/Layout';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { uploadCode } from 'lib/api';
 import { useAlert } from 'react-alert';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'lib/hooks/useAuth';
 import { PlusCircleIcon, MinusCircleIcon } from '@heroicons/react/outline';
+import FilePicker from 'components/FilePicker';
+import Code from 'components/Code';
 
 const UploadReviewPage: React.FC = () => {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>();
   const auth = useAuth();
   const alert = useAlert();
   const router = useRouter();
   const { handleSubmit, register } = useForm();
   const [reviewers, setReviewers] = useState<string[]>([]);
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    if (file) {
+      file.text().then((e) => setText(e));
+    }
+  }, [file]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -62,22 +71,14 @@ const UploadReviewPage: React.FC = () => {
 
   return (
     <Layout header={<>Add New Review Request</>}>
-      <div className="min-h-full flex flex-row">
-        <div className="flex flex-col justify-center m-auto">
-          {file && <div className="text-center">{file.name}</div>}
-          <label htmlFor="file-upload" className="flex mb-4">
-            <input
-              id="file-upload"
-              name="file-upload"
-              className=" hidden"
-              onChange={handleChange}
-              type="file"
-              multiple={false}
-            />
-            <div className="m-2 mx-auto bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm cursor-pointer inline-block">
-              upload file
+      <div className="min-h-full flex max-w-full flex-shrink">
+        <div className="flex flex-col  m-auto divide-x-2">
+          {file && (
+            <div className="">
+              <Code code={text} ext={file?.name.split('.').pop()} />{' '}
             </div>
-          </label>
+          )}
+          {!file && <FilePicker file={file} setFile={setFile} />}
           {/* <form onSubmit={handleSubmit(onSubmit)}>
           <input
           type="text"
@@ -87,16 +88,18 @@ const UploadReviewPage: React.FC = () => {
           className="text-gray-700 bg-gray-200 py-2 px-4 text-center rounded-lg text-sm mx-auto outline-none"
           />
         </form> */}
-
-          <button
-            className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
-            onClick={uploadFile}
-          >
-            Submit Review Request
-          </button>
         </div>
-        <div className="m-2">
+        <div className="m-2 flex flex-col w-72 justify-start">
+          {file && (
+            <button
+              className="m-2  border border-gray-700 bg-gray-50 text-gray-700 py-2 px-4 rounded-lg text-sm"
+              onClick={() => setFile(null)}
+            >
+              cancel
+            </button>
+          )}
           <div className="my-4">Add Reviewers</div>
+
           {auth.user?.friends?.map((e) => (
             <div key={e._id} className="my-2">
               <div
@@ -116,6 +119,15 @@ const UploadReviewPage: React.FC = () => {
               </div>
             </div>
           ))}
+
+          {file && (
+            <button
+              className="m-2 mx-auto border-2 bg-gray-700 text-gray-50 py-2 px-4 rounded-lg text-sm"
+              onClick={uploadFile}
+            >
+              Submit Review Request
+            </button>
+          )}
         </div>
       </div>
     </Layout>
