@@ -6,16 +6,21 @@ import { getUser } from '../api';
 type ContextProps = {
   firebaseUser: firebase.User | null;
   user: User | null;
+  navOpen: boolean;
+  setNavOpen: any;
 };
 
 const AuthContext = React.createContext<ContextProps>({
   firebaseUser: null,
   user: null,
+  navOpen: true,
+  setNavOpen: null,
 });
 
 const useAuthProvider = (): ContextProps => {
   const [firebaseUser, setFirebaseUser] = useState<firebase.User | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [navOpen, setNavOpen] = useState(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
@@ -41,6 +46,8 @@ const useAuthProvider = (): ContextProps => {
   return {
     user: user,
     firebaseUser: firebaseUser,
+    navOpen,
+    setNavOpen,
   };
 };
 

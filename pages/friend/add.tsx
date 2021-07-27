@@ -54,7 +54,7 @@ const Home: FC = () => {
                 onClick={() => handleAddFriend(e._id, e.name)}
                 className="p-2 mr-4 border-2 border-gray-500 text-sm rounded-md"
               >
-                ADD FRIEND
+                Add Friend
               </button>
             )}
           </div>
@@ -70,7 +70,7 @@ const Home: FC = () => {
           type="submit"
           className="m-2 p-2 border-2 rounded-md border-gray-400 hover:border-gray-700 text-sm"
         >
-          Search friend
+          Search Friend
         </button>
       </form>
     </Layout>
