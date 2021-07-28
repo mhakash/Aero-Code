@@ -1,4 +1,4 @@
-# Aero Code
+# Aero Code - Code review platform
 
 ## To run locally without docker:
 
