@@ -8,8 +8,8 @@ interface CodeProps {
   code: string;
   ext?: string;
   setSelectedLine?: any;
-  linesToHighLight: number[];
-  setLinesToHighLight: any;
+  linesToHighLight?: number[];
+  setLinesToHighLight?: any;
 }
 
 const Code: React.FC<CodeProps> = ({
@@ -54,7 +54,7 @@ const Code: React.FC<CodeProps> = ({
         useInlineStyles={true}
         lineNumberStyle={(line: number) => {
           let style: any = { cursor: 'pointer' };
-          if (linesToHighLight.indexOf(line) !== -1) {
+          if (linesToHighLight?.indexOf(line) !== -1) {
             style.backgroundColor = '#1F618D ';
           }
 
