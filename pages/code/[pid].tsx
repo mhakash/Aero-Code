@@ -88,7 +88,7 @@ const Home: FC = () => {
         <>
           <div className="flex w-full justify-end">
             <button
-              className="bg-gray-600 text-gray-50 text-sm px-4 py-1 rounded-md my-2"
+              className="bg-gray-500 text-gray-50 text-sm px-4 py-2 rounded-xl my-2"
               onClick={() => setModal(true)}
             >
               Add Review
@@ -96,7 +96,7 @@ const Home: FC = () => {
           </div>
 
           {lineSelected && (
-            <div className="text-gray-600 font-light border-b pb-1">
+            <div className="text-gray-700  border-b border-gray-400 pb-1 mb-4">
               Reviews: Line {lineSelected}
             </div>
           )}
