@@ -19,16 +19,7 @@ const DiscussionTree: FC<{ pid: string }> = ({ pid }) => {
   if (data) {
     return (
       <div className="ml-10">
-        {/*<Discussion post={data} />*/}
-        <Link
-                href={
-                  data.codes?.code_id ? `/code/${data.codes?.code_id}` : `/discussion/${data._id}`
-                }
-              >
-                <a>
-                  <Discussion post={data} hasLink={true} />
-                </a>
-              </Link>
+        <Discussion post={data} />
 
         {data.replies
           ? data.replies.map((e) => (

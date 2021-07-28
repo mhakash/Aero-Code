@@ -57,7 +57,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
         </div>
       )}
 
-      <div className="pb-5 px-4 mx-2 flex">
+      <div className="pb-5 px-4 mx-2 flex flex-row">
         <div className="mr-2 cursor-pointer">
           <Image
             src={upVote ? '/images/like-dark.svg' : '/images/like.svg'}
