@@ -89,7 +89,7 @@ export const createGroupPost = async (
     );
 
     let memberids: string[] = group.members?.map((x) => x._id) ?? [];
-    memberids = memberids.filter((item) => item != user_id);
+    //memberids = memberids.filter((item) => item != user_id);
 
     const userCollection = (await dbConnect()).db.collection('users');
     for (let i = 0; i < memberids.length; i++) {
