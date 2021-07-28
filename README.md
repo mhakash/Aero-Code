@@ -6,6 +6,12 @@
 docker-compose up -d
 ```
 
+## run all containers in production build
+
+```bash
+docker-compose -f docker-compose.yml -f production.yml up -d
+```
+
 ## rebuild and start all containers
 
 ```bash

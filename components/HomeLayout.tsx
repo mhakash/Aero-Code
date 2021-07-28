@@ -56,14 +56,23 @@ const HomeLayout: React.FC<{
               <div className="mb-2">
                 <Link href="/">
                   <a className="flex justify-between p-1 rounded hover:text-gray-100">
-                    <span>Reviews</span>
+                    <span>Review-Requests</span>
                     <ChevronDownIcon className="w-4 h-4" />
                   </a>
                 </Link>
               </div>
 
-              <div className="mb-2">
+              {/*<div className="mb-2">
                 <Link href="/friend">
+                  <a className="flex justify-between p-1 rounded hover:text-gray-100">
+                    <span>Friends</span>
+                    <ChevronDownIcon className="w-4 h-4" />
+                  </a>
+                </Link>
+        </div>*/}
+
+              <div className="mb-2">
+                <Link href="/message">
                   <a className="flex justify-between p-1 rounded hover:text-gray-100">
                     <span>Friends</span>
                     <ChevronDownIcon className="w-4 h-4" />
@@ -72,18 +81,9 @@ const HomeLayout: React.FC<{
               </div>
 
               <div className="mb-2">
-                <Link href="/message">
-                  <a className="flex justify-between p-1 rounded hover:text-gray-100">
-                    <span>Messages</span>
-                    <ChevronDownIcon className="w-4 h-4" />
-                  </a>
-                </Link>
-              </div>
-
-              <div className="mb-2">
                 <Link href="/discussion">
                   <a className="flex justify-between p-1 rounded hover:text-gray-100">
-                    <span>Discussion</span>
+                    <span>AeroFeed</span>
                     <ChevronDownIcon className="w-4 h-4" />
                   </a>
                 </Link>
