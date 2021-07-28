@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { mutate } from 'swr';
+import { CodeIcon } from '@heroicons/react/solid';
 
 const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) => {
   const { register, handleSubmit } = useForm();
@@ -39,30 +40,29 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
   };
 
   return (
-    <div className="my-2 w-full max-w-3xl flex flex-col bg-blue-100 rounded-xl border-2">
-      <div className="px-2 pt-3 m-2">
+    <div className="my-2 w-full max-w-3xl flex flex-col border-b text-gray-700">
+      <div className="pt-3 mb-2">
         {' '}
         <span className="font-bold px-2">{post.user_name}</span>{' '}
         {post.group_name && (
           <span className=" font-medium text-sm">{`posted in ${post.group_name}`}</span>
         )}{' '}
       </div>
-      <div className="pb-5 px-4 mx-2"> {post.body} </div>
+      <div className="pb-4 px-4 mx-2"> {post.body} </div>
 
       {post.codes?.code_id && (
-        <div className="pb-5 px-4 mx-2">
-          <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
-            {post.codes?.filename}
-          </div>
+        <div className="pb-2 px-4 mx-2 flex items-center text-gray-600">
+          <CodeIcon className="w-6 h-6 " />
+          <div className=" m-2  rounded-md ">{post.codes?.filename}</div>
         </div>
       )}
 
-      <div className="pb-5 px-4 mx-2 flex flex-row">
+      <div className="pb-5 px-4 mx-2 flex flex-row items-center">
         <div className="mr-2 cursor-pointer">
           <Image
             src={upVote ? '/images/like-dark.svg' : '/images/like.svg'}
-            width={20}
-            height={20}
+            width={16}
+            height={16}
             alt="upvote"
             onClick={() => handleUpVote()}
           />
@@ -71,8 +71,8 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
         <div className="ml-2 cursor-pointer">
           <Image
             src={downVote ? '/images/like-dark.svg' : '/images/like.svg'}
-            width={20}
-            height={20}
+            width={16}
+            height={16}
             alt="upvote"
             className="transform rotate-180"
             onClick={() => handleDownVote()}
@@ -98,13 +98,13 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
             <div className="self-end mx-16 px-4">
               <button
                 type="submit"
-                className="m-2 p-2 border-2 border-gray-400 rounded-lg self-end"
+                className="m-2 px-4 py-1.5 border border-gray-600 text-sm hover:bg-gray-600 hover:text-gray-100 rounded-lg self-end"
               >
                 Post Reply
               </button>
               <button
                 onClick={handleReply}
-                className="m-2 p-2 border-2 border-gray-400 rounded-lg"
+                className="m-2 px-4 py-1.5 border border-gray-600 text-sm hover:bg-gray-600 hover:text-gray-100 rounded-lg"
               >
                 Cancel
               </button>

@@ -88,7 +88,7 @@ const Home: FC = () => {
         <>
           <div className="flex w-full justify-end">
             <button
-              className="bg-gray-500 text-gray-50 text-sm px-4 py-2 rounded-xl my-2"
+              className="bg-gray-600 text-gray-50 text-sm px-4 py-2 rounded-xl my-2"
               onClick={() => setModal(true)}
             >
               Add Review
