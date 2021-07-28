@@ -30,9 +30,6 @@ const Home: FC = () => {
                 <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
                   {e.name}
                 </div>
-                <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
-                  {e.name}
-                </div>
               </a>
             </Link>
           );

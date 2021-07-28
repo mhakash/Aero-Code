@@ -50,6 +50,11 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
           <span className=" font-medium text-sm">{`posted in ${post.group_name}`}</span>
         )}{' '}
       </div>
+      {post.review_content?.severity && (
+        <div className="pb-2 px-4 mx-2 flex items-center text-gray-500 text-sm">
+          <span className="pr-2">Type: {post.review_content?.type}</span><span>Severity: {post.review_content?.severity}</span> 
+        </div>
+      )}
       <div className="pb-4 px-4 mx-2"> {post.body} </div>
 
       {post.codes?.code_id && (
@@ -60,7 +65,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
       )}
 
       <div className="pb-5 px-4 mx-2 flex flex-row items-center">
-        <div className="mr-2 cursor-pointer">
+        <div className="mr-2 cursor-pointer flex flex-row items-center">
           <Image
             src={upVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={16}
@@ -71,7 +76,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
           <p className=" font-medium px-2">{post.upvotes}</p>
         </div>
 
-        <div className="ml-2 cursor-pointer flex flex-row">
+        <div className="ml-2 cursor-pointer flex flex-row items-center">
           <Image
             src={downVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={16}

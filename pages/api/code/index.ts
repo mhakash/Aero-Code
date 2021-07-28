@@ -15,11 +15,11 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     if (req.method === 'POST') {
       try {
-        const file_name = req.body.file;
+        const file_name = unescape(req.body.file);
         const reviewers: string[] = req.body.reviewers ?? [];
 
         // console.log(file_name, reviewers);
-
+        
         const code: Code = await createCode(user_id, file_name, reviewers);
         const post = await createObject('code', code._id);
 
