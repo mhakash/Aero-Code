@@ -55,7 +55,10 @@ export const getMessageByChatRoomId = async (
      _id: user_id,
     });
     const chatrooms:{ _id: string; friend_id: string; friend_name: string; friend_avatar: string } [] = user?.chatRooms??[];
-    const chat_detail = chatrooms.find(e => e._id.equals(chat_room_id));
+    const chat_detail = chatrooms.find(e => {
+      const e_id = e._id.toString();
+      return e_id===chat_room_id;
+    });
 
     const ret = { msgs: result, chat: chat_detail as { _id: string; friend_id: string; friend_name: string; friend_avatar: string } };
     return ret;
