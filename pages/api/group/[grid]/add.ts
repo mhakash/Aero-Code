@@ -43,7 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
           const post = await createObject('code', code_id);
           if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
           if (process.env.RUNNER === 'yafi')
-            post.url = post.url.replace('localhost', '103.198.137.232');
+            post.url = post.url.replace('localhost', process.env.IP as string);
           console.log(post);
           res.status(200).json(post);
         } else {

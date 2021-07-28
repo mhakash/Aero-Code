@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import sendImage from '../public/images/send-button.svg';
 import Image from 'next/image';
 
-export const problemOptions = ['bug', 'memory leak', 'unsafe'];
-export const severityOptions = ['low', 'high'];
+export const problemOptions = ['Bug', 'Memory Leak', 'Critical Error', 'Bad Practice', 'Redundant'];
+export const severityOptions = ['Low', 'Normal', 'High'];
 const colorOptions = ['red', 'green', 'blue'];
 
 const InputBox: React.FC<{ onSubmit: any }> = ({ onSubmit }) => {

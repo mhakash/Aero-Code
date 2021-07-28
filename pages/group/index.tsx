@@ -28,7 +28,7 @@ const Home: FC = () => {
         <Link href={`/group/${e._id}`} key={e._id}>
           <a
             key={e._id}
-            className="m-2 p-2 flex items-center bg-gray-700 text-gray-50 border-2 rounded-lg"
+            className="m-2 p-2 flex items-center text-gray-700 font-semibold border-b border-t border-gray-400 hover:bg-gray-700 hover:text-gray-100"
           >
             <div>
               {/* <img src={e.avatar} className="w-10 h-10 rounded-full m-2" /> */}

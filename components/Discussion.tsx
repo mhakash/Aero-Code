@@ -19,11 +19,13 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
   // TODO: Upvote should toggle downvote if it is true and vice-versa
   const handleUpVote = async () => {
     await addVote(post._id, 'upvote', !upVote);
+    mutate(`/discussion/${post._id}`);
     setUpVote(!upVote);
   };
 
   const handleDownVote = async () => {
     await addVote(post._id, 'downvote', !downVote);
+    mutate(`/discussion/${post._id}`);
     setDownVote(!downVote);
   };
 
@@ -48,6 +50,11 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
           <span className=" font-medium text-sm">{`posted in ${post.group_name}`}</span>
         )}{' '}
       </div>
+      {post.review_content?.severity && (
+        <div className="pb-2 px-4 mx-2 flex items-center text-gray-500 text-sm">
+          <span className="pr-2">Type: {post.review_content?.type}</span><span>Severity: {post.review_content?.severity}</span> 
+        </div>
+      )}
       <div className="pb-4 px-4 mx-2"> {post.body} </div>
 
       {post.codes?.code_id && (
@@ -58,7 +65,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
       )}
 
       <div className="pb-5 px-4 mx-2 flex flex-row items-center">
-        <div className="mr-2 cursor-pointer">
+        <div className="mr-2 cursor-pointer flex flex-row items-center">
           <Image
             src={upVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={16}
@@ -66,9 +73,10 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
             alt="upvote"
             onClick={() => handleUpVote()}
           />
+          <p className=" font-medium px-2">{post.upvotes}</p>
         </div>
 
-        <div className="ml-2 cursor-pointer">
+        <div className="ml-2 cursor-pointer flex flex-row items-center">
           <Image
             src={downVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={16}
@@ -77,6 +85,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
             className="transform rotate-180"
             onClick={() => handleDownVote()}
           />
+          <p className=" font-medium px-2">{post.downvotes}</p>
         </div>
 
         {!showReply && (
