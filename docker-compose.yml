@@ -3,12 +3,13 @@ services:
   app:
     build:
       context: .
+      target: dev
     ports:
       - '3000:3000'
     volumes:
       - ./:/app
       - /app/node_modules
-      - /app/.next
+      - /.next
     depends_on:
       - mongo
       - minio

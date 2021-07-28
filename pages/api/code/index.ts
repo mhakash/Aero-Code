@@ -25,6 +25,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
         // TODO: change localhost to minio-url
         if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
+        if (process.env.RUNNER === 'yafi')
+          post.url = post.url.replace('localhost', '103.198.137.232');
         const res2 = createPost(
           user_id,
           user_name,

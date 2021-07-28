@@ -42,6 +42,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         if (filename !== '') {
           const post = await createObject('code', code_id);
           if (!process.env.LOCAL) post.url = post.url.replace('minio', 'localhost');
+          if (process.env.RUNNER === 'yafi')
+            post.url = post.url.replace('localhost', '103.198.137.232');
           console.log(post);
           res.status(200).json(post);
         } else {
