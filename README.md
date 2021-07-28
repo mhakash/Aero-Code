@@ -1,6 +1,10 @@
 # Aero Code
 
-## run all containers
+## To run locally without docker:
+
+add `LOCAL=true` in .env.local
+
+## For docker: run all containers
 
 ```bash
 docker-compose up -d
