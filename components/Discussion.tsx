@@ -18,11 +18,13 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
   // TODO: Upvote should toggle downvote if it is true and vice-versa
   const handleUpVote = async () => {
     await addVote(post._id, 'upvote', !upVote);
+    mutate(`/discussion/${post._id}`);
     setUpVote(!upVote);
   };
 
   const handleDownVote = async () => {
     await addVote(post._id, 'downvote', !downVote);
+    mutate(`/discussion/${post._id}`);
     setDownVote(!downVote);
   };
 
@@ -58,7 +60,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
       )}
 
       <div className="pb-5 px-4 mx-2 flex flex-row">
-        <div className="mr-2 cursor-pointer">
+        <div className="mr-2 cursor-pointer flex flex-row">
           <Image
             src={upVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={20}
@@ -66,9 +68,10 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
             alt="upvote"
             onClick={() => handleUpVote()}
           />
+          <p className=" font-medium px-2">{post.upvotes}</p>
         </div>
 
-        <div className="ml-2 cursor-pointer">
+        <div className="ml-2 cursor-pointer flex flex-row">
           <Image
             src={downVote ? '/images/like-dark.svg' : '/images/like.svg'}
             width={20}
@@ -77,6 +80,7 @@ const Discussion: FC<{ post: Post; hasLink?: boolean }> = ({ post, hasLink }) =>
             className="transform rotate-180"
             onClick={() => handleDownVote()}
           />
+          <p className=" font-medium px-2">{post.downvotes}</p>
         </div>
 
         {!showReply && (
