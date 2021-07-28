@@ -54,6 +54,9 @@ const Code: React.FC<CodeProps> = ({
         useInlineStyles={true}
         lineNumberStyle={(line: number) => {
           let style: any = { cursor: 'pointer' };
+
+          if (!setLinesToHighLight) return style;
+
           if (linesToHighLight?.indexOf(line) !== -1) {
             style.backgroundColor = '#1F618D ';
           }

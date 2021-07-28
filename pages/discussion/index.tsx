@@ -28,22 +28,26 @@ const Home: FC = () => {
         </>
       }
     >
-      {(data ?? []).map((e) => {
-        if (e && !e.is_reply)
-          return (
-            <div key={e._id} className="ml-5">
-              <Link
-                href={
-                  e.codes?.code_id ? `/code/${e.codes?.code_id}` : `/discussion/${e._id}`
-                }
-              >
-                <a>
-                  <Discussion post={e} hasLink={true} />
-                </a>
-              </Link>
-            </div>
-          );
-      })}
+      <div className="min-h-full">
+        {(data ?? []).map((e) => {
+          if (e && !e.is_reply)
+            return (
+              <div key={e._id} className="ml-5">
+                <Link
+                  href={
+                    e.codes?.code_id
+                      ? `/code/${e.codes?.code_id}`
+                      : `/discussion/${e._id}`
+                  }
+                >
+                  <a>
+                    <Discussion post={e} hasLink={true} />
+                  </a>
+                </Link>
+              </div>
+            );
+        })}
+      </div>
     </Layout>
   );
 };

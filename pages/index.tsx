@@ -22,20 +22,22 @@ const Home: FC = () => {
         </>
       }
     >
-      <div className="m-4 ">
-        <div className="text-2xl mb-4">Hello from Home</div>
+      <div className="min-h-full ">
+        {(data ?? []).map((e) => {
+          return (
+            <Link href={`/code/${e._id}`} key={e._id}>
+              <a>
+                <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
+                  {e.name}
+                </div>
+                <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
+                  {e.name}
+                </div>
+              </a>
+            </Link>
+          );
+        })}
       </div>
-      {(data ?? []).map((e) => {
-        return (
-          <Link href={`/code/${e._id}`} key={e._id}>
-            <a>
-              <div className="px-4 py-3 m-2 bg-gray-700 rounded-md text-gray-50">
-                {e.name}
-              </div>
-            </a>
-          </Link>
-        );
-      })}
     </Layout>
   );
 };
