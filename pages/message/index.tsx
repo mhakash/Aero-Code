@@ -17,7 +17,12 @@ const Home: FC = () => {
     <Layout
       header={
         <>
-          <div>Messages</div>
+          <div>Friends</div>
+          <div>
+            <Link href="/friend/add">
+              <a>Add Friend</a>
+            </Link>
+          </div>
         </>
       }
     >
