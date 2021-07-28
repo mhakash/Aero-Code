@@ -6,6 +6,7 @@ import React, { FC } from 'react';
 import useSWR from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const DiscussionTree: FC<{ pid: string }> = ({ pid }) => {
   const auth = useAuth();
@@ -18,7 +19,17 @@ const DiscussionTree: FC<{ pid: string }> = ({ pid }) => {
   if (data) {
     return (
       <div className="ml-10">
-        <Discussion post={data} />
+        {/*<Discussion post={data} />*/}
+        <Link
+                href={
+                  data.codes?.code_id ? `/code/${data.codes?.code_id}` : `/discussion/${data._id}`
+                }
+              >
+                <a>
+                  <Discussion post={data} hasLink={true} />
+                </a>
+              </Link>
+
         {data.replies
           ? data.replies.map((e) => (
               <div key={e}>

@@ -8,15 +8,20 @@ interface CodeProps {
   code: string;
   ext?: string;
   setSelectedLine?: any;
+  linesToHighLight: number[];
+  setLinesToHighLight: any;
 }
 
-const Code: React.FC<CodeProps> = ({ ext, code = 'txt', setSelectedLine }) => {
-  const [lineToHighLight, setLineToHighLight] = useState<number[]>([]);
-  const [CodeInputModal, setCodeInputModalVisibility] = useModal();
-
+const Code: React.FC<CodeProps> = ({
+  ext,
+  code = 'txt',
+  setSelectedLine,
+  linesToHighLight,
+  setLinesToHighLight,
+}) => {
   const handleLineClicked = useCallback(
     (i: number) => {
-      console.log('line number clicke: ', i);
+      console.log('line number clicked: ', i);
       // setLineToHighLight((p) => {
       //   if (p.includes(i)) return p.filter((e) => e !== i);
       //   else return [...p, i];
@@ -40,10 +45,6 @@ const Code: React.FC<CodeProps> = ({ ext, code = 'txt', setSelectedLine }) => {
     });
   }, [handleLineClicked]);
 
-  useEffect(() => {
-    if (lineToHighLight.length > 0) setCodeInputModalVisibility(true);
-  }, [setCodeInputModalVisibility, lineToHighLight.length]);
-
   return (
     <div className="">
       <SyntaxHighlighter
@@ -53,8 +54,8 @@ const Code: React.FC<CodeProps> = ({ ext, code = 'txt', setSelectedLine }) => {
         useInlineStyles={true}
         lineNumberStyle={(line: number) => {
           let style: any = { cursor: 'pointer' };
-          if (lineToHighLight.indexOf(line) !== -1) {
-            style.backgroundColor = 'blue';
+          if (linesToHighLight.indexOf(line) !== -1) {
+            style.backgroundColor = '#1F618D ';
           }
 
           return style;
@@ -63,17 +64,13 @@ const Code: React.FC<CodeProps> = ({ ext, code = 'txt', setSelectedLine }) => {
       >
         {code}
       </SyntaxHighlighter>
-      {/*       
-      <CodeInputModal>
-        <div className="" style={{ width: '600px' }}>
-          <InputBox />
-        </div>
-      </CodeInputModal> */}
-      {/* {lineToHighLight.length > 0 && (
-        <div className="w-full max-w-xl">
-          <InputBox />
-        </div>
-      )} */}
+      <style jsx global>{`
+        .linenumber {
+          margin-right: 6px;
+          border-radius: 5px;
+          padding-left: 10px;
+        }
+      `}</style>
     </div>
   );
 };

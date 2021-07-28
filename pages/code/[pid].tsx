@@ -2,7 +2,7 @@ import Layout from 'components/Layout';
 import { addReview, getCodeDataById, getDiscussionByID, getPostByCodeId } from 'lib/api';
 import Code from '../../components/Code';
 import { useRouter } from 'next/router';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 import { useAuth } from '../../lib/hooks/useAuth';
 import InputBox from '../../components/InputBox';
@@ -11,7 +11,11 @@ import { useModal } from 'components/Modal';
 import Discussion from 'components/Discussion';
 import Link from 'next/link';
 
-const DiscussionByID: React.FC<{ id: string }> = ({ id }) => {
+const DiscussionByID: React.FC<{ id: string; line: number; setLines: any }> = ({
+  id,
+  line,
+  setLines,
+}) => {
   const auth = useAuth();
 
   const { data } = useSWR(
@@ -19,7 +23,17 @@ const DiscussionByID: React.FC<{ id: string }> = ({ id }) => {
     () => getDiscussionByID(id),
   );
 
+  useEffect(() => {
+    if (data?.review_content?.line) {
+      setLines((p: number[]) => {
+        if (p.includes(data?.review_content?.line ?? -1)) return p;
+        else return [...p, data?.review_content?.line];
+      });
+    }
+  }, [data, setLines]);
+
   if (!data) return <CircularLoading />;
+  if (line > 0 && line !== data.review_content?.line) return null;
 
   return (
     <Link href={`/discussion/${id}`}>
@@ -36,6 +50,8 @@ const Home: FC = () => {
   const { pid } = router.query;
 
   const [lineSelected, setLineSelected] = useState<number | null>(null);
+  const [linesToHighLight, setLinesToHighLight] = useState<number[]>([]);
+
   const [Modal, setModal] = useModal();
 
   const { data } = useSWR(
@@ -78,16 +94,22 @@ const Home: FC = () => {
               Add Review
             </button>
           </div>
+
           {lineSelected && (
             <div className="text-gray-600 font-light border-b pb-1">
               Reviews: Line {lineSelected}
             </div>
           )}
+
           {code ? (
             <div>
               {code.replies?.map((e) => (
                 <div key={e}>
-                  <DiscussionByID id={e} />
+                  <DiscussionByID
+                    id={e}
+                    line={lineSelected ?? 0}
+                    setLines={setLinesToHighLight}
+                  />
                 </div>
               ))}
             </div>
@@ -100,6 +122,8 @@ const Home: FC = () => {
       {data?.data ? (
         <div className="min-h-full">
           <Code
+            linesToHighLight={linesToHighLight}
+            setLinesToHighLight={setLinesToHighLight}
             setSelectedLine={setLineSelected}
             code={
               typeof data.data === 'object'
