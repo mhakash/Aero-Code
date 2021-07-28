@@ -47,11 +47,12 @@ const Home: FC = () => {
           <h1 className="mt-4 border-gray-400 border-b pb-2">Add Members</h1>
           {data?.friends?.map((e) => (
             <div key={e._id} className="my-2">
-              <div className="flex cursor-pointer">
+              <div className="flex cursor-pointer items-center justify-between">
                 <div className="font-light text-sm text-gray-700">{e.name}</div>
+
                 <button
                   onClick={() => handleAddMember(e._id, e.name)}
-                  className="p-2 mr-4 border-2 border-gray-500 text-sm rounded-md"
+                  className="px-2 py-1.5 text-sm rounded-md"
                 >
                   Add to Group
                 </button>

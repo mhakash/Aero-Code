@@ -54,7 +54,7 @@ const Message: FC = () => {
         });
       });
     }
-  }, [data?.msgs]);
+  }, [data?.msgs, auth.user?._id]);
 
   const [message, setMessage] = useState('');
   const [messages, dispatchMessage] = useReducer(reducer, initialMessage);
@@ -76,9 +76,9 @@ const Message: FC = () => {
 
   return (
     <Layout
-    header={
-      <>
-        <div className="px-4 flex flex-row items-center">
+      header={
+        <>
+          <div className="px-4 flex flex-row items-center">
             <div>
               {data?.chat.friend_avatar && (
                 <Image
@@ -90,13 +90,14 @@ const Message: FC = () => {
                 />
               )}
             </div>
-            <div className="flex flex-col"><div className="font-bold px-3 ">{data?.chat.friend_name}{' '}</div>
+            <div className="flex flex-col">
+              <div className="font-bold px-3 ">{data?.chat.friend_name} </div>
             </div>
           </div>
-      </>
-    }
+        </>
+      }
     >
-      <div className="flex flex-col">
+      <div className="flex flex-col overflow-y-scroll no-scrollbar">
         {messages.map((e) => (
           <div
             key={e.key}
@@ -111,7 +112,7 @@ const Message: FC = () => {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex items-center">
+      <form onSubmit={handleSubmit} className="flex items-center justify-end">
         <input
           type="text"
           value={message}
